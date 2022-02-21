@@ -1,0 +1,8 @@
+<h1>Questions</h1>
+<ul>
+{% for question in object_list %}
+    <li>{{ question.created|date }} - {{ question.name }}</li>
+{% empty %}
+    <li>No Questions yet.</li>
+{% endfor %}
+</ul>
