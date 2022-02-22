@@ -1,9 +1,46 @@
-<form method="POST">
-    {% csrf_token %}
-    <input name="email" type="text">
-    <input name="password" type="password">
-    <input type="submit" value="submit">
-</form>
-{% if error %}
-    ERROR
-{% endif %}
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+
+{% block head %}
+<style>
+    .content {
+        width: 100%;
+        max-width: 350px;
+        padding: 20px;
+        margin: 0 auto;
+        margin-top: 10%;
+        border-radius: 7px;
+        border-width: 0px;
+    }
+
+    button { margin-top: 10px; }
+    input { margin-top: 15px; }
+    body { background-color: #f5f5f5; }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="content card text-center">
+
+    <h1 class="h3 mb-3 font-weight-normal">Sign In</h1>
+
+    {% if error %}
+        <div class="alert alert-danger" role="alert">Wrong Username / Password</div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email" required autocomplete="off">
+
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required autocomplete="off">
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+</div>
+
+{% endblock %}
