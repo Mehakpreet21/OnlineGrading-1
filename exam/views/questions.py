@@ -15,12 +15,13 @@ class QuestionList(ListView):
     model = Question
     paginate_by = 100
     context_object_name = 'question_list'
+    ordering = ['-created']
     template_name = 'exam/question/list.html'
 
 
 
 @method_decorator(teacher_required, name='dispatch')
-class AddQuestion(View):
+class QuestionAdd(View):
     template_name = 'exam/question/add.html'
 
     def get(self, request):
