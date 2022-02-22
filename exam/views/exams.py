@@ -11,8 +11,28 @@ from exam.models import Exam, ExamQuestion
 
 
 @method_decorator(teacher_required, name='dispatch')
-class QuestionList(ListView):
+class ExamList(ListView):
     model = Exam
-    paginate_by = 100
-    context_object_name = 'exam_list'
     template_name = 'exam/exam/list.html'
+    context_object_name = 'exam_list'
+    paginate_by = 100
+
+
+class AddExam(View):
+    template_name = 'exam/exam/add.html'
+
+    def get(self, request):
+        return render(request, self.template_name)
+
+
+    def post(self, request):
+        pass
+
+
+class ExamDetail(View):
+    template_name = 'exam/exam/detail.html'
+
+
+    def get(self, request):
+        # list = ExamQuestion.objects.filter(exam=exam_pk)
+        return render(request, self.template_name)

@@ -37,8 +37,14 @@ class Exam(models.Model):
     created = models.DateTimeField(auto_now=True)
     is_assigned = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 
 class ExamQuestion(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     points = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.exam.name} - {self.question.name}"
