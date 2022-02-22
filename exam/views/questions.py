@@ -5,7 +5,7 @@ from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 
 from authentication.decorators import teacher_required
-from .models import Question
+from exam.models import Question
 
 # Create your views here.
 
@@ -15,13 +15,13 @@ class QuestionList(ListView):
     model = Question
     paginate_by = 100
     context_object_name = 'question_list'
-    template_name = 'question_list.html'
+    template_name = 'exam/question/list.html'
 
 
 
 @method_decorator(teacher_required, name='dispatch')
 class AddQuestion(View):
-    template_name = 'exam/question_add.html'
+    template_name = 'exam/question/add.html'
 
     def get(self, request):
         return render(request, self.template_name)
@@ -40,4 +40,5 @@ class AddQuestion(View):
 @method_decorator(teacher_required, name='dispatch')
 class QuestionDetail(DetailView):
     model = Question
+    template_name = 'exam/question/detail.html'
 

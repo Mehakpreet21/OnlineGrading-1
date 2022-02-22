@@ -1,0 +1,12 @@
+<ul>
+{% for exam in exam_list %}
+<li>
+    <a href="">
+        {{ exam.created|date }} - {{ exam.name }}
+    </a>
+</li>
+
+{% empty %}
+        <li class="list-group-item">No Questions yet.</li>
+{% endfor %}
+</ul>
