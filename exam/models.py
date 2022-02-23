@@ -48,3 +48,40 @@ class ExamQuestion(models.Model):
 
     def __str__(self):
         return f"{self.exam.name} - {self.question.name}"
+
+
+
+"""
+from django.contrib.auth import get_user_model
+
+class TakenExam(models.Model):
+    student = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now=True)
+
+    is_graded = models.BooleanField(default=False)
+
+
+class Answer(models.Model):
+    takenexam = models.ForeignKey(TakenExam, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now=True)
+
+    submission = models.TextField(default="")
+    points = models.IntegerField(default=0)
+
+"""
+
+
+"""
+class Answer(models.Model):
+    student = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now=True)
+
+    submission = models.TextField(default="")
+
+    is_graded = models.BooleanField(default=False)
+    points = models.IntegerField(default=0)
+"""

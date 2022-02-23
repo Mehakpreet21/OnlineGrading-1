@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import redirect, render, get_object_or_404
 
 from authentication.decorators import teacher_required
-from exam.models import Exam, ExamQuestion
+from exam.models import Exam, ExamQuestion, Question
 
 # Create your views here.
 
@@ -25,7 +25,9 @@ class ExamAdd(View):
     template_name = 'exam/exam/add.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        questions = Question.objects.all()
+
+        return render(request, self.template_name, { "questions": questions })
 
 
     def post(self, request):

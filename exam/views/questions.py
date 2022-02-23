@@ -35,7 +35,7 @@ class QuestionAdd(View):
 
         question.save()
 
-        return redirect('/questions')
+        return redirect('/exam/questions')
 
 
 @method_decorator(teacher_required, name='dispatch')
