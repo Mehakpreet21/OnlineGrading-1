@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+
+<h1>Exam Detail</h1>
+
+{{ exam.name }} <br>
+{{ exam.created|date }} <br>
+{{ exam.is_assigned }} <br><br>
+
+Questions: <br>
+
+{% for eq in questions %}
+    <a href="{% url 'questions-detail' eq.question.pk %}">
+        {{ eq.question.name }} - ({{ eq.points }} points)
+    </a>
+    <br>
+{% empty %}
+    <p>No Questions.</p>
+{% endfor %}
+
+<br>
+TODO assign exam
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% endblock %}

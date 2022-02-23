@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<h1>Create Exam</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    Exam Name: <input type="text" name="name" required> <br><br>
+
+    {% for q in questions %}
+
+        <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
+        <label for="{{q.pk}}"> {{q.name}}</label>
+
+        <input type="number" name="questions[{{ forloop.counter }}]" value="0" />
+        <br>
+
+    {% endfor %}
+
+    <input type="checkbox" id="is_assigned" name="is_assigned" value="assigned">
+    <label for="is_assigned"> Assign To Students </label>
+    <br>
+
+    <input type="submit" value="Create Exam">
+</form>
+
+{% endblock %}
+
+
+{% block scripts %}
+<script>
+
+</script>
+{% endblock %}

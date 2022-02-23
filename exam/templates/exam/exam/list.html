@@ -1,12 +1,14 @@
+<h1>Exam List</h1>
+
 <ul>
 {% for exam in exam_list %}
 <li>
-    <a href="">
-        {{ exam.created|date }} - {{ exam.name }}
+    <a href="{% url 'exams-detail' exam.pk %}">
+        {{ exam.name }} - {{ exam.created|date }} - {{ exam.is_assigned }}
     </a>
 </li>
 
 {% empty %}
-        <li class="list-group-item">No Questions yet.</li>
+    <li class="list-group-item">No Questions yet.</li>
 {% endfor %}
 </ul>
