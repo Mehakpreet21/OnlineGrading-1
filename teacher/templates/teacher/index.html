@@ -59,7 +59,7 @@
     <div class="content" style="margin-left:50px; margin-right:50px; align-content: center">
     <h2>What would you like to proceed with?</h2><br>
     <link rel="stylesheet" href="style.css">
-     <a href="/Users/simran/Documents/MakeNewExam.html"><button class="button button1" name="newexam">Make a New Exam </button><br><br></a>
+     <a href="{% url 'exam:exams-add' %}"><button class="button button1" name="newexam">Make a New Exam </button><br><br></a>
      <a href="/Users/simran/Documents/GradeExam.html"><button class="button button2" name="grade">Grade Exam </button><br><br>
      <a href="/Users/simran/Documents/AddQuestion.html"><button class="button button3" name="bank">Add Question to the Question Bank </button><br><br></a>
 

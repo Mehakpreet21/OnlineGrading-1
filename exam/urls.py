@@ -3,6 +3,8 @@ from django.urls import path
 from .views.questions import QuestionDetail, QuestionList, QuestionAdd
 from .views.exams import ExamDetail, ExamList , ExamAdd
 
+app_name = "exam"
+
 urlpatterns = [
     # Question
     path('questions', QuestionList.as_view(), name="questions-list"),

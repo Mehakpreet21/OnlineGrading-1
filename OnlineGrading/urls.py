@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', indexView),
     path('authentication/', include('authentication.urls')),
-    path('exam/', include('exam.urls')),
+    path('exam/', include('exam.urls', namespace='exam')),
     path('teacher/', include('teacher.urls')),
 ]
