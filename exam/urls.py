@@ -1,7 +1,7 @@
 from django.urls import path
 
 from .views.questions import QuestionDetail, QuestionList, QuestionAdd
-from .views.exams import ExamDetail, ExamList , ExamAdd
+from .views.exams import ExamDetail, ExamList , ExamAdd, TakeExam
 
 app_name = "exam"
 
@@ -15,4 +15,5 @@ urlpatterns = [
     path('exams', ExamList.as_view(), name="exams-list"),
     path('exams/add', ExamAdd.as_view(), name="exams-add"),
     path('exams/detail/<pk>', ExamDetail.as_view(), name="exams-detail"),
+    path('exams/take/<pk>', TakeExam.as_view(), name="exams-take"),
 ]

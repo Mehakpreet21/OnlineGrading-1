@@ -1,11 +1,10 @@
 from django.http import JsonResponse
 from django.views import View
 from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect, render, get_object_or_404
 
-from authentication.decorators import teacher_required
+from authentication.decorators import teacher_required, student_required
 from exam.models import Exam, ExamQuestion, Question
 
 # Create your views here.
@@ -37,7 +36,7 @@ class ExamAdd(View):
         exam.save()
 
         ## Handle adding ExamQuestions
-        # request.POST is immutable to create copy
+        # request.POST is immutable. create copy
         question_post = dict(request.POST)
         # delete keys no longer needed to leave only question data 
         del question_post['csrfmiddlewaretoken']
@@ -83,4 +82,40 @@ class ExamDetail(View):
         exam.save()
 
         return JsonResponse({ "ok": True })
+
+
+
+@method_decorator(student_required, name='dispatch')
+class TakeExam(View):
+    template_name = 'exam/exam/take.html'
+    exam_not_assigned_template = 'exam/exam/not_assigned.html'
+
+    def get(self, request, **kwargs):
+        pk = kwargs['pk']
+        exam = get_object_or_404(Exam, pk=pk)
+
+        if not exam.is_assigned:
+            return render(request, self.exam_not_assigned_template)
+        
+        questions = ExamQuestion.objects.filter(exam=pk)
+
+        return render(request, self.template_name, { "exam": exam, "questions": questions })
+
+
+
+    def post(self, request, **kwargs):
+        pk = kwargs['pk']
+        exam = get_object_or_404(Exam, pk=pk)
+
+        if not exam.is_assigned:
+            return render(request, self.exam_not_assigned_template)
+
+        # request.POST is immutable. create copy
+        question_post = dict(request.POST)
+        # delete keys no longer needed to leave only question data 
+        del question_post['csrfmiddlewaretoken']
+
+        print(question_post)
+        for i in range(1, len(question_post) + 1):
+            print(question_post[f"answer[{i}]"])
 
