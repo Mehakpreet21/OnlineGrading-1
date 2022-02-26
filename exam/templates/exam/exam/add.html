@@ -3,9 +3,16 @@
 
 {% block content %}
 
-<div class="container">
-<h1 style = "background-color:#008CBA">Create Exam</h1>
- 
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+<div style = "height:200px; background-color:#008CBA;">
+<h1 class = display-4>Create Exam</h1>
+</div>
+
+
+<hr class="solid">
+
 
 <form method="post">
     {% csrf_token %}
@@ -27,6 +34,7 @@
     <br>
 
     <input type="submit" value="Create Exam">
+</body>
 </form>
 
 {% endblock %}
