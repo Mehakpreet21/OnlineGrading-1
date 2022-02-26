@@ -61,7 +61,7 @@
     <link rel="stylesheet" href="style.css">
      <a href="{% url 'exam:exams-add' %}"><button class="button button1" name="newexam">Make a New Exam </button><br><br></a>
      <a href="/Users/simran/Documents/GradeExam.html"><button class="button button2" name="grade">Grade Exam </button><br><br>
-     <a href="/Users/simran/Documents/AddQuestion.html"><button class="button button3" name="bank">Add Question to the Question Bank </button><br><br></a>
+     <a href="{% url 'exam:questions-add' %}"><button class="button button3" name="bank">Add Question to the Question Bank </button><br><br></a>
 
       <!--<button type="button" name="start">Make a New Exam</button><br><br>
       <button type="button" name="results">Grade Exam</button><br><br>-->
