@@ -20,7 +20,8 @@ from .views import indexView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', indexView),
-    path('authentication/', include('authentication.urls')),
+    path('authentication/', include('authentication.urls', namespace='authentication')),
     path('exam/', include('exam.urls', namespace='exam')),
-    path('teacher/', include('teacher.urls')),
+    path('teacher/', include('teacher.urls', namespace='teacher')),
+    path('student/', include('student.urls', namespace='student')),
 ]
