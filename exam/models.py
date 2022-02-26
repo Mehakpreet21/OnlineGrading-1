@@ -15,14 +15,13 @@ class Question(models.Model):
 
     """Each line will be passed in separately. Must be input, output, blank line
     Input: Commas will be used for multiple seperate args. 
-    Lines with # as first charecter are ignored
+    Lines blank lines and lines starting with # as first charecter are ignored
     
     def example(a, b, c):
         ...
 
     'a', 'b', 'c'
     output exactly as printed by function return
-    # must be blank line seperating test cases
 
     ['arrays', 'are treated as single arg'], [1, 2, 3], 42
     output exactly as printed by function return 
@@ -76,19 +75,3 @@ class Answer(models.Model):
 
     def __str__(self):
         return f"{self.takenexam.exam.name} - {self.question.name} - {self.takenexam.student.email} "
-
-
-
-
-"""
-class Answer(models.Model):
-    student = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now=True)
-
-    submission = models.TextField(default="")
-
-    is_graded = models.BooleanField(default=False)
-    points = models.IntegerField(default=0)
-"""
