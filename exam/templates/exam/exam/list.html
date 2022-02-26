@@ -3,7 +3,7 @@
 <ul>
 {% for exam in exam_list %}
 <li>
-    <a href="{% url 'exams-detail' exam.pk %}">
+    <a href="{% url 'exam:exams-detail' exam.pk %}">
         {{ exam.name }} - {{ exam.created|date }} - {{ exam.is_assigned }}
     </a>
 </li>

@@ -5,7 +5,7 @@ from django.utils.decorators import method_decorator
 from django.shortcuts import redirect, render, get_object_or_404
 
 from authentication.decorators import teacher_required, student_required
-from exam.models import Exam, ExamQuestion, Question
+from exam.models import Exam, ExamQuestion, Question, TakenExam, Answer
 
 # Create your views here.
 
@@ -94,8 +94,17 @@ class TakeExam(View):
         pk = kwargs['pk']
         exam = get_object_or_404(Exam, pk=pk)
 
+        # is exam assigned 
         if not exam.is_assigned:
             return render(request, self.exam_not_assigned_template)
+
+        # has the student already taken this exam
+        try:
+            taken = TakenExam.objects.get(exam=exam, student=request.user)
+            return redirect('/exam/exams/complete')
+        except TakenExam.DoesNotExist:
+            pass # student has not taken the exam
+        
         
         questions = ExamQuestion.objects.filter(exam=pk)
 
@@ -107,6 +116,13 @@ class TakeExam(View):
         pk = kwargs['pk']
         exam = get_object_or_404(Exam, pk=pk)
 
+        # has the student already taken this exam
+        try:
+            taken = TakenExam.objects.get(exam=exam, student=request.user)
+            return redirect('/exam/exams/complete')
+        except TakenExam.DoesNotExist:
+            pass # student has not taken the exam
+
         if not exam.is_assigned:
             return render(request, self.exam_not_assigned_template)
 
@@ -115,7 +131,20 @@ class TakeExam(View):
         # delete keys no longer needed to leave only question data 
         del question_post['csrfmiddlewaretoken']
 
-        print(question_post)
-        for i in range(1, len(question_post) + 1):
-            print(question_post[f"answer[{i}]"])
+        taken_exam = TakenExam.objects.create(student=request.user, exam=exam)
 
+        to_insert = []
+        for i in range(1, len(question_post) + 1):
+            question_pk, submission = question_post[f"answer[{i}]"]
+
+            answer = Answer(takenexam=taken_exam, question_id=question_pk, submission=submission)
+            to_insert.append(answer)
+
+        Answer.objects.bulk_create(to_insert)
+        
+        return redirect('/exam/exams/complete')
+
+
+@student_required
+def exam_complete(request):
+    return render(request, 'exam/exam/complete.html')

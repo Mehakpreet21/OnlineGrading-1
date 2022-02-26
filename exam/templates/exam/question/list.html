@@ -17,7 +17,7 @@
     <ul class="list-group">
       {% for question in question_list %}
         <li class="list-group-item">
-      	    <a href="{% url 'questions-detail' question.pk %}">
+      	    <a href="{% url 'exam:questions-detail' question.pk %}">
                       {{ question.created|date }} - {{ question.name }}
             </a>
         </li>

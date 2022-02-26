@@ -13,7 +13,7 @@
 Questions: <br>
 
 {% for eq in questions %}
-    <a href="{% url 'questions-detail' eq.question.pk %}">
+    <a href="{% url 'exam:questions-detail' eq.question.pk %}">
         {{ eq.question.name }} - ({{ eq.points }} points)
     </a>
     <br>

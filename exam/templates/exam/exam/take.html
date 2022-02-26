@@ -15,8 +15,8 @@
     {% for eq in questions %}
         <div>
             <h5>{{ eq.question.name }}</h5>
-            <p>{{ eq.detail }} <i>({{ eq.points }})</i> </p> <br>
-            <input type="hidden" value="{{ eq.pk }}" name="answer[{{ forloop.counter }}]">
+            <p>{{ eq.question.detail }} <i>({{ eq.points }})</i> </p> <br>
+            <input type="hidden" value="{{ eq.question.pk }}" name="answer[{{ forloop.counter }}]">
             <textarea name="answer[{{ forloop.counter }}]">
 
             </textarea>

@@ -1,6 +1,9 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 # Create your models here.
+
+User = get_user_model()
 
 
 class Question(models.Model):
@@ -50,16 +53,17 @@ class ExamQuestion(models.Model):
         return f"{self.exam.name} - {self.question.name}"
 
 
-
-"""
-from django.contrib.auth import get_user_model
+# Exam Answers
 
 class TakenExam(models.Model):
-    student = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=True)
 
     is_graded = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.exam.name} - {self.student.email}"
 
 
 class Answer(models.Model):
@@ -70,7 +74,10 @@ class Answer(models.Model):
     submission = models.TextField(default="")
     points = models.IntegerField(default=0)
 
-"""
+    def __str__(self):
+        return f"{self.takenexam.exam.name} - {self.question.name} - {self.takenexam.student.email} "
+
+
 
 
 """
