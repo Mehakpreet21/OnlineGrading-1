@@ -7,6 +7,7 @@
     <title>Make an exam</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
+<<<<<<< HEAD
   <body>
     <div class="jumbotron jumbotron-fluid" style="background-color: #C8E381;">
       <div class="container">
@@ -42,6 +43,64 @@
   </body>
 </html>
 <!--
+=======
+  
+    <style>
+        .button {
+          background-color: #00000F; /* Green */
+          border: none;
+          color: white;
+          padding: 10px 18px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          transition-duration: 0.4s;
+          cursor: pointer;
+        }
+        .button1 {
+          background-color: white;
+          color: black;
+          border: 2px solid #008CBA;
+        }
+        .button1:hover {
+          background-color: #008CBA;
+          color: white;
+        }
+      </style>
+      <body> 
+        <div class="jumbotron jumbotron-fluid" style="background-color: #008CBA;">
+          <div class="container">
+            <h1 class="display-4">Create Exams </h1>
+            <p class="lead">Create exams using questions from the question</p>
+          </div>
+        </div>
+
+
+<form method="post">
+    {% csrf_token %}
+
+    Exam Name: <input type="text" name="name" required> <br><br>
+
+    {% for q in questions %}
+
+        <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
+        <label for="{{q.pk}}"> {{q.name}}</label>
+
+        <input type="number" name="questions[{{ forloop.counter }}]" value="0" />
+        <br>
+
+    {% endfor %}
+
+    <input type="checkbox" id="is_assigned" name="is_assigned" value="assigned">
+    <label for="is_assigned"> Assign To Students </label>
+    <br>
+
+    <input class ="button button1" type="submit" value="Create Exam">
+</body>
+</form>
+>>>>>>> 661380f05e2d3498fd2e242c7a00a11c48220901
 
 {% endblock %}
 
