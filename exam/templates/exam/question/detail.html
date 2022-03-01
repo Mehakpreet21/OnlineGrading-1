@@ -10,22 +10,26 @@
     <div class="jumbotron text-center">
       <h1>Question #{{ question.pk }} Details</h1>
       <p>Details for question #{{ question.pk }} provided on this page.</p>
+      <button class="button button1" name="start"><a href="#">Logout</a></button>
     </div>
+    <div style="margin-left:50px; margin-right:50px">
+      {% block content %}
+
+        <h4>Question Number:</h4>
+        {{ question.pk }}<br>
+        <h4>Question Name:<br></h4>
+        {{ question.name }}<br>
+        <h4>Date Created:<br></h4>
+        {{ question.created|date }} <br>
+        <h4>Question Description: <br></h4>
+        {{ question.detail }} <br>
+        <h4>Testcases:<br></h4>
+        {{ question.testcases }} <br>
+        <p></p>
+
+      {% endblock %}
+
+      <input class="button button1" type="submit" value="Add to Exam">
+
   </body>
 </html>
-{% block content %}
-
-  <p>Question Number:
-  {{ question.pk }}<br></p>
-  <p>Question Name:
-  {{ question.name }}<br></p>
-  <p>Date Created:
-  {{ question.created|date }} <br></p>
-  <p>Question Description:
-  {{ question.detail }} <br></p>
-  <p>Testcases:
-  {{ question.testcases }} <br></p>
-
-{% endblock %}
-
-<input class="button button1" type="submit" value="Add to Exam">

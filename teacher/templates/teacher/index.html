@@ -71,6 +71,7 @@
       <div class="container">
         <h1 class="display-4">Welcome, Teacher {{ request.user.email }}.</h1>
         <p class="lead">This is your home page</p>
+        <button class="button button1" name="start"><a href="#">Logout</a></button>
       </div>
     </div>
     <hr class="solid">
@@ -78,7 +79,7 @@
     <h2>What would you like to proceed with?</h2><br>
      <a href="{% url 'exam:exams-add' %}"><button class="button button1" name="newexam">Make a New Exam </button><br><br></a>
      <a href="{% url 'exam:exams-list' %}"><button class="button button2" name="newexam">Exam List </button><br><br></a>
-     <a href="/Users/simran/Documents/GradeExam.html"><button class="button button3" name="grade">Grade Exam </button><br><br>
+     <a href="#"><button class="button button3" name="grade">Grade Exam </button><br><br>
       <a href="{% url 'exam:questions-add' %}"><button class="button button4" name="newexam">Add Question to the Question Bank </button><br><br></a>
       <a href="{% url 'exam:questions-list' %}"><button class="button button5" name="newexam">View Question Bank </button><br><br></a>
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

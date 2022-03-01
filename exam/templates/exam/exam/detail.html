@@ -1,32 +1,43 @@
-{% extends "base.html" %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </head>
+    <body>
+<div class="jumbotron text-center">
+  <h1>Exam #{{ exam.pk }} Details</h1>
+  <p>Details for exam #{{ exam.pk }} provided on this page.</p>
+  <button class="button button1" name="start"><a href="#">Logout</a></button>
+</div>
+<div style="margin-left:50px; margin-right:50px">
+  {% block content %}
 
+  <h1>Exam Detail</h1>
 
-{% block content %}
+  {{ exam.name }} <br>
+  {{ exam.created|date }} <br>
+  {{ exam.is_assigned }} <br><br>
 
+  Questions: <br>
+  
+  {% for eq in questions %}
+      <a href="{% url 'exam:questions-detail' eq.question.pk %}">
+          {{ eq.question.name }} - ({{ eq.points }} points)
+      </a>
+      <br>
+  {% empty %}
+      <p>No Questions.</p>
+  {% endfor %}
 
-<h1>Exam Detail</h1>
+  <br>
 
-{{ exam.name }} <br>
-{{ exam.created|date }} <br>
-{{ exam.is_assigned }} <br><br>
+  {% endblock %}
 
-Questions: <br>
+  <input class="button button1" type="submit" value="Add to Exam">
 
-{% for eq in questions %}
-    <a href="{% url 'exam:questions-detail' eq.question.pk %}">
-        {{ eq.question.name }} - ({{ eq.points }} points)
-    </a>
-    <br>
-{% empty %}
-    <p>No Questions.</p>
-{% endfor %}
-
-<br>
 TODO assign exam
 
-{% endblock %}
-
-
-{% block scripts %}
-
-{% endblock %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>
