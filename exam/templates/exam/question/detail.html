@@ -1,9 +1,31 @@
-{% block content %} 
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="jumbotron text-center">
+      <h1>Question #{{ question.pk }} Details</h1>
+      <p>Details for question #{{ question.pk }} provided on this page.</p>
+    </div>
+  </body>
+</html>
+{% block content %}
 
-    {{ question.pk }} <br>
-    {{ question.name }} <br>
-    {{ question.created|date }} <br><br>
-    {{ question.detail }} <br><br>
-    {{ question.testcases }} <br><br>
+  <p>Question Number:
+  {{ question.pk }}<br></p>
+  <p>Question Name:
+  {{ question.name }}<br></p>
+  <p>Date Created:
+  {{ question.created|date }} <br></p>
+  <p>Question Description:
+  {{ question.detail }} <br></p>
+  <p>Testcases:
+  {{ question.testcases }} <br></p>
 
 {% endblock %}
+
+<input class="button button1" type="submit" value="Add to Exam">
