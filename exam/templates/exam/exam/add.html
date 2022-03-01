@@ -7,13 +7,38 @@
     <title>Create Exam</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
-  <body> 
-    <div class="jumbotron jumbotron-fluid" style="background-color: #008CBA;">
-      <div class="container">
-        <h1 class="display-4">Create Exams </h1>
-        <p class="lead">Create exams using questions from the question bank</p>
-      </div>
-    </div>
+  
+    <style>
+        .button {
+          background-color: #00000F; /* Green */
+          border: none;
+          color: white;
+          padding: 10px 18px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 16px;
+          margin: 4px 2px;
+          transition-duration: 0.4s;
+          cursor: pointer;
+        }
+        .button1 {
+          background-color: white;
+          color: black;
+          border: 2px solid #008CBA;
+        }
+        .button1:hover {
+          background-color: #008CBA;
+          color: white;
+        }
+      </style>
+      <body> 
+        <div class="jumbotron jumbotron-fluid" style="background-color: #008CBA;">
+          <div class="container">
+            <h1 class="display-4">Create Exams </h1>
+            <p class="lead">Create exams using questions from the question</p>
+          </div>
+        </div>
 
 
 <form method="post">
@@ -35,7 +60,7 @@
     <label for="is_assigned"> Assign To Students </label>
     <br>
 
-    <input type="submit" value="Create Exam">
+    <input class ="button button1" type="submit" value="Create Exam">
 </body>
 </form>
 

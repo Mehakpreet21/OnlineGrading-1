@@ -5,14 +5,38 @@
     <title>Question Bank</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
+  <style>
+    .button {
+      background-color: #00000F; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+    .button1 {
+      background-color: white;
+      color: black;
+      border: 2px solid #FF9AAA;
+    }
+    .button1:hover {
+      background-color: #FF9AAA;
+      color: white;
+    }
+  </style>
   <body> 
     <div class="jumbotron jumbotron-fluid" style="background-color: #FF9AAA;">
       <div class="container">
         <h1 class="display-4">Question Bank</h1>
         <p class="lead">This is a list of questions you can use for exams or quizzes.</p>
       </div>
-    </div>
-    <button type="button" name="button">Add a new question</button>
+    </div>  
+    <button class="button button1">Add a new question</button><br><br>
     <div style="margin-left:50px; margin-right:50px">
     <ul class="list-group">
       {% for question in question_list %}
