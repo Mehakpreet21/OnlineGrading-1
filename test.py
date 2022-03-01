@@ -49,18 +49,13 @@ def get_testing_code(name: str, testcases: str):
     return "".join(params), "".join(output)
 
 
-def grade_exam(testing_code, expected_output, submission):
-    testing_code, expected_output = get_testing_code(name, testcases)
-    return submission + testcases
 
 
-# run = get_running_code(name, testcases, submission)
 print(get_testing_code("sum", testcases))
 
 
 # import subprocess
 # result = subprocess.check_output(['python', '-c', run])
-# # sys.stdout = io.StringIO()
-# # exec(run)
-# # result = sys.stdout.getvalue()
 # print(str(result.decode("utf-8") ))
+
+
