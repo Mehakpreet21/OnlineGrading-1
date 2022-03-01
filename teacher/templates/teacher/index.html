@@ -47,6 +47,24 @@
       background-color: #9400D3;
       color: white;
     }
+    .button4 {
+      background-color: white;
+      color: black;
+      border: 2px solid #FAB137;
+    }
+    .button4:hover {
+      background-color: #FAB137;
+      color: white;
+    }
+    .button5 {
+      background-color: white;
+      color: black;
+      border: 2px solid #FF9AAA;
+    }
+    .button5:hover {
+      background-color: #FF9AAA;
+      color: white;
+    }
   </style>
   <body>
     <div class="jumbotron jumbotron-fluid">
@@ -59,10 +77,10 @@
     <div class="content" style="margin-left:50px; margin-right:50px; align-content: center">
     <h2>What would you like to proceed with?</h2><br>
      <a href="{% url 'exam:exams-add' %}"><button class="button button1" name="newexam">Make a New Exam </button><br><br></a>
-     <a href="{% url 'exam:exams-list' %}"><button class="button button1" name="newexam">Exam List </button><br><br></a>
-     <a href="/Users/simran/Documents/GradeExam.html"><button class="button button2" name="grade">Grade Exam </button><br><br>
-      <a href="{% url 'exam:questions-add' %}"><button class="button button1" name="newexam">Add Question to the Question Bank </button><br><br></a>
-      <a href="{% url 'exam:questions-list' %}"><button class="button button1" name="newexam">View Question Bank </button><br><br></a>
+     <a href="{% url 'exam:exams-list' %}"><button class="button button2" name="newexam">Exam List </button><br><br></a>
+     <a href="/Users/simran/Documents/GradeExam.html"><button class="button button3" name="grade">Grade Exam </button><br><br>
+      <a href="{% url 'exam:questions-add' %}"><button class="button button4" name="newexam">Add Question to the Question Bank </button><br><br></a>
+      <a href="{% url 'exam:questions-list' %}"><button class="button button5" name="newexam">View Question Bank </button><br><br></a>
       <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

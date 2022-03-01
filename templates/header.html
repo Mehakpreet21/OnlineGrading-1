@@ -8,22 +8,13 @@
   <body>
     <div class="jumbotron jumbotron-fluid" style="background-color: #C8E381;">
       <div class="container">
-        <h1 class="display-4">Exam List</h1>
+        <h1 class="display-4"></h1>
+        <p class="lead">Here you can choose questions from Question bank for an Exam.</p>
       </div>
     </div>
     <div style="margin-left:50px; margin-right:50px">
-      <ul>
-      {% for exam in exam_list %}
-      <li class="list-group-item">
-          <a href="{% url 'exam:exams-detail' exam.pk %}">
-              {{ exam.name }} - {{ exam.created|date }} - {{ exam.is_assigned }}
-          </a>
-      </li>
 
-      {% empty %}
-          <li class="list-group-item">No Questions yet.</li>
-      {% endfor %}
-      </ul>
+
 
     </div>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
