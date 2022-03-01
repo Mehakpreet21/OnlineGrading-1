@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <title>Create a Question</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -30,11 +31,17 @@
       color: white;
     }
   </style>
-  <body>
-    <div class="jumbotron text-center">
-      <h1>Create a Question</h1>
-      <p>Create some questions to add to the question bank!</p>
+  <body> 
+    <div class="jumbotron jumbotron-fluid" style="background-color: #F9CD85;">
+      <div class="container">
+        <h1 class="display-4">Create a Question</h1>
+        <p class="lead">Create questions to be added to the question bank </p>
+      </div>
     </div>
+
+
+
+
     <form method="POST">
       {% csrf_token %}
       <div class="form-group">
