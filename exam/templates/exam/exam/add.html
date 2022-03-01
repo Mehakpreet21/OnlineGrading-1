@@ -20,7 +20,7 @@
           {% csrf_token %}
           <div class="form-group">
             <label for="QuestionName">Exam name</label>
-            <input type="text" required class="form-control" id="exam_name" required placeholder="Exam Name">
+            <input type="text" required class="form-control" id="exam_name" required placeholder="Exam Name" name="name">
           </div>
           {% for q in questions %}
           <div class="form-group">
