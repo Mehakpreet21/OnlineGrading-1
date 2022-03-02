@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 
@@ -7,6 +8,7 @@ User = get_user_model()
 
 
 class Question(models.Model):
+
     """Name to identify this question in a list"""
     name = models.TextField()
 
@@ -29,6 +31,13 @@ class Question(models.Model):
     testcases = models.TextField(null=True)
 
     created = models.DateTimeField(auto_now=True)
+
+    class Difficulty(models.TextChoices):
+        EASY = 'EASY', _('EASY')
+        MEDIUM = 'MEDIUM', _('MEDIUM')
+        HARD = 'HARD', _('HARD')
+
+    difficulty = models.CharField(max_length=10, choices=Difficulty.choices, default=Difficulty.EASY)
 
     def __str__(self):
         return self.name
@@ -71,7 +80,8 @@ class Answer(models.Model):
     created = models.DateTimeField(auto_now=True)
 
     submission = models.TextField(default="")
-    points = models.IntegerField(default=0)
+    autograded_points = models.FloatField(default=0)
+    points = models.FloatField(default=0)
 
     def __str__(self):
         return f"{self.takenexam.exam.name} - {self.question.name} - {self.takenexam.student.email} "

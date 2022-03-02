@@ -31,7 +31,8 @@ class QuestionAdd(View):
         question = Question(
             name=request.POST['name'], 
             detail=request.POST['detail'], 
-            testcases=request.POST['testcases'])
+            testcases=request.POST['testcases'],
+            difficulty=request.POST['difficulty'])
 
         question.save()
 

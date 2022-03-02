@@ -14,13 +14,13 @@
       </div>
     </div>
       <div style="margin-left:50px; margin-right:50px">
-    <button type="button" name="button">Add a new question</button> <!---goes to add.html--->
+    <a href="{% url 'exam:questions-add' %}">Add a new question</a> <!---goes to add.html--->
 
     <ul class="list-group">
       {% for question in question_list %}
         <li class="list-group-item">
       	    <a href="{% url 'exam:questions-detail' question.pk %}">
-                      {{ question.created|date }} - {{ question.name }}
+              {{ question.name }} - {{ question.difficulty }} - {{ question.created|date }}
             </a>
         </li>
        {% empty %}

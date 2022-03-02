@@ -26,7 +26,7 @@
           <div class="form-group">
             <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
             <div class="row">
-              <div class="col"><label for="{{q.pk}}"> {{q.name}}</label></div>
+              <div class="col"><label for="{{q.pk}}"> {{q.name}} - {{q.difficulty}}</label></div>
               <div class="col"><div class="float-right"><input style="text-align:right" type="number" name="questions[{{ forloop.counter }}]" value="0" /></div></div>
             </div>
 
