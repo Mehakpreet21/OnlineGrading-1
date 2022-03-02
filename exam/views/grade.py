@@ -13,20 +13,34 @@ from exam.models import Exam, ExamQuestion, Question, TakenExam, Answer
 @method_decorator(teacher_required, name='dispatch')
 class GradeReadyList(ListView):
     model = Exam
-    template_name = "grade/list.html"
+    template_name = "exam/grade/list.html"
     ordering = ['-created']
     paginate_by = 100
+    context_object_name = 'exam_list'
 
     def get_queryset(self):
         return self.model.objects.filter(is_assigned=True)
+
+
+@method_decorator(student_required, name='dispatch')
+class StudentExamGradedList(ListView):
+    model = TakenExam
+    template_name = "exam/grade/studentResults.html"
+    ordering = ['-created']
+    paginate_by = 100
+    context_object_name = 'graded_exams'
+
+    def get_queryset(self):
+        return self.model.objects.filter(student=self.request.user, is_graded=True)
+
 
 
 
 @teacher_required
 def gradeExam(request, exam_pk):
     exam = get_object_or_404(Exam, pk=exam_pk)
-    
-    # taken_exams = TakenExam.objects.filter(exam=exam)
+
+    taken_exams = TakenExam.objects.filter(exam=exam)
     # for taken in taken_exams:
     #     # get params and output for each exam question 
     #     exam_questions = ExamQuestion.objects.filter(exam=exam)
@@ -35,6 +49,5 @@ def gradeExam(request, exam_pk):
     #         name, testcases = q.name, q.testcases
 
 
-    return render(request, 'grade/gradedExamsList.html')
-
+    return render(request, 'grade/gradedExamsList.html', { "exam": exam, "graded_list": taken_exams  })
 

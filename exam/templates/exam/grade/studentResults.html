@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block content %}
+
+<h1>{{ request.user.email }}</h1>
+<p>
+    Exams you have taken will be shown here after grading
+</p>
+<br>
+
+
+<table class="table">
+    <thead>
+        <th>Exam Name</th>
+        <th>Taken</th>
+        <th>Details</th>
+    </thead>
+    <tbody>
+        {% for exam in graded_exams %}
+        <tr>
+            <td>{{ exam.exam.name }}</td>
+            <td>{{ exam.created|date }}</td>
+            <td>
+                <a href="">Details</a>
+            </td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td>No Exams Were Graded</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

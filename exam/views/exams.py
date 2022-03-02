@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.views import View
+from django.db.models import Q
 from django.views.generic.list import ListView
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect, render, get_object_or_404
@@ -83,6 +84,19 @@ class ExamDetail(View):
 
         return JsonResponse({ "ok": True })
 
+
+@method_decorator(student_required, name='dispatch')
+class ExamPending(ListView):
+    model = Exam
+    template_name = "exam/exam/pending.html"
+    ordering = ['created']
+    paginate_by = 100
+    context_object_name = 'exam_list'
+
+    def get_queryset(self):
+        already_taken = TakenExam.objects.filter(student=self.request.user)
+        exclude_ids = [t.id for t in already_taken]
+        return self.model.objects.filter(is_assigned=True).filter(~Q(id__in=exclude_ids))
 
 
 @method_decorator(student_required, name='dispatch')
