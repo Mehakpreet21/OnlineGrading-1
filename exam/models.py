@@ -67,6 +67,7 @@ class TakenExam(models.Model):
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now=True)
+    comment = models.TextField(default="")
 
     is_graded = models.BooleanField(default=False)
 
@@ -81,6 +82,7 @@ class Answer(models.Model):
 
     submission = models.TextField(default="")
     autograded_points = models.FloatField(default=0)
+    autograde_output = models.TextField(default="")
     points = models.FloatField(default=0)
 
     def __str__(self):
