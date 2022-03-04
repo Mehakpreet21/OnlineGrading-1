@@ -1,9 +1,9 @@
 from django.urls import path
 
-
 from .views.questions import QuestionDetail, QuestionList, QuestionAdd
 from .views.exams import ExamDetail, ExamList , ExamAdd, TakeExam, exam_complete, ExamPending
 from .views.grade import GradeReadyList, gradeExam, StudentExamGradedList
+from .views.results import ExamResultsView
 
 
 app_name = "exam"
@@ -26,4 +26,7 @@ urlpatterns = [
     path('grade', GradeReadyList.as_view(), name="grade-list"),
     path('grade/student-list', StudentExamGradedList.as_view(), name="grade-student-list"),
     path('grade/grade/<exam_pk>', gradeExam, name="grade-exam"),
+
+    # Results
+    path('results/<takenexam_pk>', ExamResultsView.as_view(), name="results-view"),
 ]

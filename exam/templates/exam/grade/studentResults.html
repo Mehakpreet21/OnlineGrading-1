@@ -23,7 +23,7 @@
             <td>{{ exam.exam.name }}</td>
             <td>{{ exam.created|date }}</td>
             <td>
-                <a href="">Details</a>
+                <a href="{% url 'exam:results-view' exam.pk %}">Details</a>
             </td>
         </tr>
 

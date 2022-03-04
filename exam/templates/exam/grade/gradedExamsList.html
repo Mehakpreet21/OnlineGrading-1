@@ -19,7 +19,7 @@
             <td>{{ e.student }}</td>
             <td>{{ e.created|date }}</td>
             <td>
-                <a href="">View Grade Details</a>
+                <a href="{% url 'exam:results-view' e.pk %}">View Grade Details</a>
             </td>
         </tr>
         {% empty %}

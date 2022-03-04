@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Exam Results{% endblock %}
+
+{% block content %}
+
+<h1>Exam Results - {{ taken_by.email }} </h1>
+<h4>Exam Name: {{ exam.name }}</h4>
+<h4>Created: {{ exam.created|date }}</h4>
+<h4>This exam was submitted at: {{ taken_at|date }} {{ taken_at|time }}</h4>
+<br>
+<h4>Comments:</h4>
+<p>{% if comment %} {{ comment }} {% else %} None {% endif %}</p>
+
+<h4>Total Points (autograded): {{ points_autograde }} / {{ max_possible_points }} </h4>
+<h4>Total Points (Manually Adjusted): {{ points_total }} / {{ max_possible_points }} </h4>
+<br>
+
+
+<h4>Questions</h4>
+
+{% for q in questions %}
+
+<h5>{{ q.question.name }}</h5>
+<p>{{ q.question.detail }}</p>
+
+<table class="table">
+    <thead>
+        <th>Submission</th>
+        <th>Autograde Output</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <pre>{{ q.answer.submission }}</pre>
+            </td>
+            <td>
+                <pre>{{ q.answer.autograde_output }}</pre>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+
+<table class="table">
+    <thead>
+        <th>Testcase</th>
+        <th>Expected</th>
+        <th>Actual</th>
+        <th>Autograde Points</th>
+        <th>Manual Points</th>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>Function Name</td>
+            <td>{{ q.question.name }}</td>
+            <td>{% if q.answer.name_correct %} {% else %} INCORRECT {% endif %}</td>
+            <td>{{ q.answer.name_autograde_points }}</td>
+            <td>{{ q.answer.name_points }}</td>
+        </tr>
+
+        {% for tc in q.testcases %}
+        <tr>
+            <td>{{ tc.testcase }}</td>
+            <td>{{ tc.expected }}</td>
+            <td>{{ tc.actual }}</td>
+            <td>{{ tc.points_autograde }}</td>
+            <td>{{ tc.point_manual }}</td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
+
+<h5>Total Points (autograded): {{ q.points_autograde }} / {{ q.max_possible_points }} </h5>
+<h5>Total Points (Manually Adjusted): {{ q.points_total }} / {{ q.max_possible_points }} </h5>
+
+<hr>
+<br><br>
+{% empty %}
+<p>No Questions.</p>
+{% endfor %}
+
+
+
+{% endblock %}

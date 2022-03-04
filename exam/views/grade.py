@@ -1,11 +1,9 @@
-from django.http import JsonResponse
-from django.views import View
 from django.views.generic.list import ListView
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 
 from authentication.decorators import teacher_required, student_required
-from exam.models import Exam, ExamQuestion, Question, TakenExam, Answer, AnswerTestCase
+from exam.models import Exam, ExamQuestion, TakenExam, Answer, AnswerTestCase
 
 from exam.grade_helpers import get_params_output_from_testcases, get_output, check_name, correct_name, grade_testcases
 
@@ -107,11 +105,13 @@ def gradeExam(request, exam_pk):
             AnswerTestCase.objects.bulk_create(testcases_insert)
             answer.save()
 
-
         # Mark Exam Graded
         taken.is_graded = True
         taken.save()
-        
+
+    # Unassign exam
+    exam.is_assigned = False
+    exam.save()
 
     return render(request, 'exam/grade/gradedExamsList.html', { "exam": exam, "graded_list": taken_exams  })
 
