@@ -95,7 +95,8 @@ class ExamPending(ListView):
 
     def get_queryset(self):
         already_taken = TakenExam.objects.filter(student=self.request.user)
-        exclude_ids = [t.id for t in already_taken]
+        exclude_ids = [t.exam.id for t in already_taken]
+        print(exclude_ids)
         return self.model.objects.filter(is_assigned=True).filter(~Q(id__in=exclude_ids))
 
 

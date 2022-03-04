@@ -81,9 +81,24 @@ class Answer(models.Model):
     created = models.DateTimeField(auto_now=True)
 
     submission = models.TextField(default="")
-    autograded_points = models.FloatField(default=0)
     autograde_output = models.TextField(default="")
-    points = models.FloatField(default=0)
+
+    name_correct = models.BooleanField(default=False)
+    name_autograde_points = models.FloatField(default=0)
+    name_points = models.FloatField(default=0)
 
     def __str__(self):
         return f"{self.takenexam.exam.name} - {self.question.name} - {self.takenexam.student.email} "
+
+
+class AnswerTestCase(models.Model):
+    answer = models.ForeignKey(Answer, on_delete=models.CASCADE)
+    testcase = models.TextField(default="")
+    expected = models.TextField(default="")
+    actual = models.TextField(default="")
+    
+    points_autograde = models.FloatField(default=0)
+    point_manual = models.FloatField(default=0)
+
+    def __str__(self):
+        return f"{self.answer.takenexam} | {self.answer.question} - {self.testcase} "

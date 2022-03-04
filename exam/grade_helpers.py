@@ -88,3 +88,23 @@ def get_output(source_code):
         return result.decode()
     except subprocess.CalledProcessError as e:
         return e.output.decode()
+
+
+# return List[  ( param, expected, actual, score )  ]
+def grade_testcases(params, expected_output, raw_student_output, item_score):
+    # transform student_output into array of lines. 1 line for each case
+    student_outputs = raw_student_output.splitlines()
+
+    return_data = []
+    for i in range(len(params)):
+        expected = expected_output[i]
+        try:
+            actual = student_outputs[i]
+        except:
+            actual = ""
+        
+        score = item_score if expected == actual else 0
+        return_data.append( (params[i], expected, actual, score) )
+
+    return return_data
+
