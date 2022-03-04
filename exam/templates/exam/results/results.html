@@ -4,13 +4,26 @@
 
 {% block content %}
 
+<!-- if can_edit wrap in form -->
+{% if can_edit %}
+<form method="POST">
+{% csrf_token %}
+{% endif %}
+
+
 <h1>Exam Results - {{ taken_by.email }} </h1>
 <h4>Exam Name: {{ exam.name }}</h4>
 <h4>Created: {{ exam.created|date }}</h4>
 <h4>This exam was submitted at: {{ taken_at|date }} {{ taken_at|time }}</h4>
 <br>
+
 <h4>Comments:</h4>
-<p>{% if comment %} {{ comment }} {% else %} None {% endif %}</p>
+{% if can_edit %}
+    <textarea name="comment">{{ comment }}</textarea>
+{% else %}
+    <p>{% if comment %} {{ comment }} {% else %} None {% endif %}</p>
+{% endif %}
+<br>
 
 <h4>Total Points (autograded): {{ points_autograde }} / {{ max_possible_points }} </h4>
 <h4>Total Points (Manually Adjusted): {{ points_total }} / {{ max_possible_points }} </h4>
@@ -55,9 +68,15 @@
         <tr>
             <td>Function Name</td>
             <td>{{ q.question.name }}</td>
-            <td>{% if q.answer.name_correct %} {% else %} INCORRECT {% endif %}</td>
+            <td>{% if q.answer.name_correct %} {{ q.question.name }} {% else %} INCORRECT {% endif %}</td>
             <td>{{ q.answer.name_autograde_points }}</td>
-            <td>{{ q.answer.name_points }}</td>
+            <td>
+            {% if can_edit %}
+                <input type="text" name="namePoints[{{ q.answer.pk }}]" value="{{ q.answer.name_points }}">
+            {% else %}
+                {{ q.answer.name_points }}
+            {% endif %}
+            </td>
         </tr>
 
         {% for tc in q.testcases %}
@@ -66,7 +85,13 @@
             <td>{{ tc.expected }}</td>
             <td>{{ tc.actual }}</td>
             <td>{{ tc.points_autograde }}</td>
-            <td>{{ tc.point_manual }}</td>
+            <td>
+            {% if can_edit %}
+                <input type="text" name="testcaseEdit[{{ tc.pk }}]" value="{{ tc.point_manual }}">
+            {% else %}
+                {{ tc.point_manual }}
+            {% endif %}
+            </td>
         </tr>
         {% endfor %}
 
@@ -83,5 +108,15 @@
 {% endfor %}
 
 
+<!-- if can_edit close -->
+{% if can_edit %}
+<input type="submit" value="Save Changes">
+</form>
+<br><br><br>
+{% endif %}
 
 {% endblock %}
+
+{% if can_edit %}
+{% else %}
+{% endif %}

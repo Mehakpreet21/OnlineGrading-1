@@ -94,4 +94,29 @@ class ExamResultsView(View):
         if not request.user.role == User.Roles.TEACHER:
             return redirect("/") # only allow Teachers to post
 
+        takenexam_pk = kwargs['takenexam_pk']
+        taken_exam = get_object_or_404(TakenExam, pk=takenexam_pk)
+
+        if not taken_exam.is_graded:
+           return render(request, 'exam/results/notgraded.html')
         
+        # post = dict(request.POST)
+        taken_exam.comment = request.POST["comment"]
+        taken_exam.save()
+
+        for key, val in request.POST.items():
+            if key.startswith("namePoints"):
+                pk = int(key[11:-1])
+                ans = Answer.objects.get(pk=pk)
+                ans.name_points = float(val)
+                ans.save()
+
+            if key.startswith("testcaseEdit"):
+                pk = int(key[13:-1])
+                tc = AnswerTestCase.objects.get(pk=pk)
+                tc.point_manual = float(val)
+                tc.save()
+
+
+        return self.get(request, **kwargs)
+
