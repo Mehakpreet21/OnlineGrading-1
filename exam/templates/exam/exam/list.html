@@ -1,34 +1,66 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="jumbotron jumbotron-fluid" style="background-color: #C8E381;">
-      <div class="container">
-        <h1 class="display-4">Exam List</h1>
-        <button class="button button1" name="start"><a href="#">Logout</a></button>
-      </div>
-    </div>
-    <div style="margin-left:50px; margin-right:50px">
-      <ul>
-      {% for exam in exam_list %}
-      <li class="list-group-item">
-          <a href="{% url 'exam:exams-detail' exam.pk %}">
-              {{ exam.name }} - {{ exam.created|date }} - {{ exam.is_assigned }}
-          </a>
-      </li>
+{% extends "base.html" %}
 
-      {% empty %}
-          <li class="list-group-item">No Exams yet.</li>
-      {% endfor %}
-      </ul>
+{% block title %}Exam List{% endblock %}
 
-    </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>
+{% block head %}
+<style>
+</style>
+{% endblock %}
+
+
+{% block header %}
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-4">Exam Bank</h1>
+    <p class="lead">List of Exams</p>
+
+    <button class="button button1" name="start">
+      <a href="/">Back</a>
+    </button>
+    <br>
+
+    <a href="{% url 'exam:exams-add' %}">Create Exam</a>
+    <br>
+
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+
+<table class="table">
+  <thead>
+    <td>Name</td>
+    <td>Created</td>
+    <td>Assigned</td>
+    <td>Details</td>
+  </thead>
+  <tbody>
+
+    {% for exam in exam_list %}
+      <tr>
+        <td>{{ exam.name }}</td>
+        <td>{{ exam.created|date }} {{ exam.created|time }}</td>
+        
+        {% if exam.is_assigned %}
+          <td>ASSIGNED</td>
+        {% else %}
+          <td>NOT ASSIGNED</td>
+        {% endif %}
+
+        <td><a href="{% url 'exam:exams-detail' exam.pk %}">View Details</a></td>
+      </tr>
+    {% empty %}
+        <li class="list-group-item">No Exams yet. <a href="{% url 'exam:exams-add' %}">Create Exam</a></li>
+        <tr>
+          <td>No Exams yet. </td>
+        </tr>
+    {% endfor %}
+
+    
+  </tbody>
+</table>
+
+{% endblock %}

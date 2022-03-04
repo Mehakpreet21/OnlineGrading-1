@@ -34,8 +34,8 @@ class ExamResultsView(View):
         for ans in answers:
             ans_testcases = [tc for tc in answer_test_cases if tc.answer.pk == ans.pk ]
 
-            q_autograde_points = 0
-            q_points_total = 0
+            q_autograde_points = ans.name_autograde_points
+            q_points_total = ans.name_points
             for tc in ans_testcases:
                 q_autograde_points += tc.points_autograde
                 q_points_total += tc.point_manual

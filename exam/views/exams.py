@@ -1,4 +1,3 @@
-from django.http import JsonResponse
 from django.views import View
 from django.db.models import Q
 from django.views.generic.list import ListView
@@ -76,13 +75,14 @@ class ExamDetail(View):
 
     def post(self, request, **kwargs):
         # Call exists to set is_assigned field
-        # We will save effort and use AJAX call to call this
         pk = kwargs['pk']
         exam = get_object_or_404(Exam, pk=pk)
-        exam.is_assigned = request.POST.get('assigned', False)
+
+        action = request.POST.get('submit', 'assign')
+        exam.is_assigned = action == 'assign'
         exam.save()
 
-        return JsonResponse({ "ok": True })
+        return self.get(request, **kwargs)
 
 
 @method_decorator(student_required, name='dispatch')
@@ -144,6 +144,7 @@ class TakeExam(View):
         question_post = dict(request.POST)
         # delete keys no longer needed to leave only question data 
         del question_post['csrfmiddlewaretoken']
+        del question_post['submit']
 
         taken_exam = TakenExam.objects.create(student=request.user, exam=exam)
 

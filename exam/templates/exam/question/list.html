@@ -1,35 +1,58 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Question Bank</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="jumbotron jumbotron-fluid" style="background-color: #C8E381;">
-      <div class="container">
-        <h1 class="display-4">Question Bank</h1>
-        <p class="lead">This is a list of questions you can use for exams or quizzes.</p>
-        <button class="button button1" name="start"><a href="#">Logout</a></button>
-      </div>
-    </div>
-      <div style="margin-left:50px; margin-right:50px">
-    <a href="{% url 'exam:questions-add' %}">Add a new question</a> <!---goes to add.html--->
+{% extends "base.html" %}
 
-    <ul class="list-group">
-      {% for question in question_list %}
-        <li class="list-group-item">
-      	    <a href="{% url 'exam:questions-detail' question.pk %}">
-              {{ question.name }} - {{ question.difficulty }} - {{ question.created|date }}
-            </a>
-        </li>
-       {% empty %}
-        <li class="list-group-item">No Questions yet.</li>
-       {% endfor %}
-    </ul>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  </body>
-</html>
+{% block title %}Question Bank{% endblock %}
+
+{% block head %}
+<style>
+</style>
+{% endblock %}
+
+
+
+{% block header %}
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-4">Question Bank</h1>
+    <p class="lead">This is a list of questions you can use for exams or quizzes</p>
+
+    <button class="button button1" name="start">
+      <a href="{% url 'exam:questions-add' %}">Add a new question</a>
+    </button>
+    <br>
+    <button class="button button1" name="start">
+      <a href="/">Back</a>
+    </button>
+
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+
+<table class="table">
+  <thead>
+    <th>#</th>
+    <th>Function Name</th>
+    <th>Difficulty</th>
+    <th>Created</th>
+    <th>Details</th>
+  </thead>
+  <tbody>
+    {% for question in question_list %}
+
+    <tr>
+      <td>{{ question.pk }}</td>
+      <td>{{ question.name }}</td>
+      <td>{{ question.difficulty }}</td>
+      <td>{{ question.created|date }}</td>
+      <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
+    </tr>
+    
+    {% empty %}
+    <tr>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

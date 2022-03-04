@@ -86,6 +86,7 @@ class Answer(models.Model):
     name_correct = models.BooleanField(default=False)
     name_autograde_points = models.FloatField(default=0)
     name_points = models.FloatField(default=0)
+    name_max_points = models.FloatField(default=0)
 
     def __str__(self):
         return f"{self.takenexam.exam.name} - {self.question.name} - {self.takenexam.student.email} "

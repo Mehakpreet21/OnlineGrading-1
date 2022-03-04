@@ -1,50 +1,73 @@
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-  </head>
-  <body>
-    <div class="jumbotron jumbotron-fluid" style="background-color: #C8E381;">
-      <div class="container">
-        <h1 class="display-4">Exam {{ exam.name }}</h1>
-        <p class="lead">Created on: {{ exam.created|date }} <br></p>
-      </div>
-    </div>
-    <div style="margin-left:50px; margin-right:50px">
+{% block title %}Take Exam{% endblock %}
 
-      <h2>Questions</h2>
-      <form method="POST">
-          {% csrf_token %}
-          {% for eq in questions %}
-          <div class="form-group">
-
-            <label for="{{q.pk}}">{{ eq.question.name }}</label>
-            <p>{{ eq.question.detail }} <i>({{ eq.points }})</i> </p> <br>
-            <input type="hidden" value="{{ eq.question.pk }}" name="answer[{{ forloop.counter }}]">
-            <label for="">Answer {{ forloop.counter }}: </label><br>
-            <textarea name="answer[{{ forloop.counter }}]"></textarea>
-          </div>
-              <br>
-          {% empty %}
-              <p>No Questions.</p>
-          {% endfor %}
-
-          <br>
-          <br>
-          <input type="submit" value="Submit Exam">
-
-      </form>
-
-    </div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>
+{% block head %}
+<style>
+    .button {
+    background-color: #00000F; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+  }
+  .button1:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+</style>
+{% endblock %}
 
 
 
-<h1></h1>
+{% block header %}
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-4">{{ exam.name }}</h1>
+    <p class="lead">This exam was created {{ exam.created|date }} {{ exam.created|time }}</p>
+    <p class="lead">Good Luck</p>
+    <br>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<h2>Questions</h2>
+
+<form method="POST">
+  {% csrf_token %}
+
+  {% for eq in questions %}
+  <div class="form-group">
+
+    <label for="{{q.pk}}">{{ eq.question.name }}</label>
+    <p>{{ eq.question.detail }} <i>({{ eq.points }} points)</i> </p> <br>
+
+    <input type="hidden" value="{{ eq.question.pk }}" name="answer[{{ forloop.counter }}]">
+
+    <label for="q-{{ forloop.counter }}">Answer {{ forloop.counter }}: </label><br>
+    <textarea id="q-{{ forloop.counter }}" name="answer[{{ forloop.counter }}]"></textarea>
+  </div>
+  <br>
+
+  {% empty %}
+      <p>No Questions.</p>
+  {% endfor %}
+
+  <br><br>
+  <button type="submit" value="Submit Exam" class="button button1" name="submit">Submit Exam</button>
+  <br>
+</form>
+{% endblock %}

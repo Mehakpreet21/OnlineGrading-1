@@ -1,43 +1,104 @@
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    </head>
-    <body>
-<div class="jumbotron text-center">
-  <h1>Exam #{{ exam.pk }} Details</h1>
-  <p>Details for exam #{{ exam.pk }} provided on this page.</p>
-  <button class="button button1" name="start"><a href="#">Logout</a></button>
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+
+{% block head %}
+<style>
+  .button {
+    background-color: #00000F; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+  }
+  .button1:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+  .button4 {
+    background-color: white;
+    color: black;
+    border: 2px solid #FAB137;
+  }
+  .button4:hover {
+    background-color: #FAB137;
+    color: white;
+  }
+</style>
+{% endblock %}
+
+
+
+{% block header %}
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-4">{{ exam.name }} Details</h1>
+    <p class="lead">Details for exam {{ exam.name }} provided on this page.</p>
+
+    <button class="button button1" name="start">
+      <a href="/">Back</a>
+    </button>
+  </div>
 </div>
-<div style="margin-left:50px; margin-right:50px">
-  {% block content %}
+{% endblock %}
 
-  <h1>Exam Detail</h1>
 
-  {{ exam.name }} <br>
-  {{ exam.created|date }} <br>
-  {{ exam.is_assigned }} <br><br>
+{% block content %}
 
-  Questions: <br>
-  
-  {% for eq in questions %}
-      <a href="{% url 'exam:questions-detail' eq.question.pk %}">
-          {{ eq.question.name }} - ({{ eq.points }} points)
-      </a>
-      <br>
-  {% empty %}
-      <p>No Questions.</p>
-  {% endfor %}
+<h3>Exam Name: {{ exam.name }} </h3>
+<h3>Created: {{ exam.created|date }} {{ exam.created|time }} </h3>
+<br>
+<h3>Questions</h3>
 
-  <br>
 
-  {% endblock %}
+<table class="table">
+  <thead>
+    <th>Question</th>
+    <th>Points</th>
+  </thead>
+  <tbody>
 
-  <input class="button button1" type="submit" value="Add to Exam">
+    {% for eq in questions %}
+      <tr>
+        <!-- Question -->
+        <td>
+          <a href="{% url 'exam:questions-detail' eq.pk %}" target="_blank">
+            {{eq.question.name}} - {{eq.question.difficulty}}</a>
+        </td>
+        <!-- Points -->
+        <td>
+          {{ eq.points }}
+        </td>
+      </tr>
+    {% empty %}
+    <tr>
+      <td>No Questions In this Exam</td>
+    </tr>
+    {% endfor %}
 
-TODO assign exam
+  </tbody>
+</table>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-</body>
-</html>
+<!-- Assign / Unassign -->
+<form method="POST">
+  {% csrf_token %}
+
+  {% if exam.is_assigned %}
+    <button class="button button4" name="submit" type="submit" value="unassign">Unassign Exam</button>
+  {% else %}
+    <button class="button button1" name="submit" type="submit" value="assign">Assign to Students</button>
+  {% endif %}
+</form>
+
+{% endblock %}

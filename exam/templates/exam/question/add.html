@@ -1,91 +1,100 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Create a Question</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-  </head>
-  <style>
-    .button {
-      background-color: #00000F; /* Green */
-      border: none;
-      color: white;
-      padding: 16px 32px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 16px;
-      margin: 4px 2px;
-      transition-duration: 0.4s;
-      cursor: pointer;
-    }
-    .button1 {
-      background-color: white;
-      color: black;
-      border: 2px solid #F9CD85;
-    }
-    .button1:hover {
-      background-color: #F9CD85;
-      color: white;
-    }
-  </style>
-  <body>
-    <div class="jumbotron jumbotron-fluid" style="background-color: #F9CD85;">
-      <div class="container">
-        <h1 class="display-4">Create a Question</h1>
-        <p class="lead">Create questions to be added to the question bank </p>
-      </div>
+{% extends "base.html" %}
+
+{% block title %}Create a Question{% endblock %}
+
+{% block head %}
+<style>
+  .button {
+    background-color: #00000F; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #F9CD85;
+  }
+  .button1:hover {
+    background-color: #F9CD85;
+    color: white;
+  }
+</style>
+{% endblock %}
+
+
+
+{% block header %}
+<div class="jumbotron jumbotron-fluid" style="background-color: #F9CD85;">
+  <div class="container">
+    <h1 class="display-4">Create a Question</h1>
+    <p class="lead">Create questions to be added to the question bank </p>
+    <br>
+    <a href="{% url 'exam:questions-list' %}">
+      <button class="button button1">Question Bank</button>
+    </a>
+  </div>
+  <br>
+</div>
+<br>
+{% endblock %}
+
+
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+
+  <!-- Function Name -->
+  <div class="form-group">
+    <h4><label for="usr">Function Name:</label></h4>
+    <input type="text" name="name" class='form-control'required> <br>
+  </div>
+  <br>
+
+  <!-- Discription -->
+  <div class="form-group">
+    <h4><label for="usr">Problem Description:</label></h4>
+    <textarea name="detail" class="form-control" required></textarea>
+  </div>
+  <br>
+
+  <!-- Difficulty -->
+  <div class="form-group">
+    <h4><label>Difficulty:</label></h4>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="difficulty" id="easy" value="EASY">
+      <label class="form-check-label" for="flexRadioDefault1">Easy</label>
     </div>
 
-    <div style="margin-left:50px; margin-right:50px">
-
-
-    <form method="POST">
-      {% csrf_token %}
-      <div class="form-group">
-       <h4> <label for="usr">Function Name:</label></h4>
-        <input type="text" name="name" class='form-control'required> <br>
-      </div>
-      <div class="form-group">
-        <h4><label for="usr">Problem Description:</label></h4>
-        <textarea name="detail" class="form-control" required></textarea>
-      </div>
-
-    <div class="form-group">
-      <label>Difficulty:</label>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="difficulty" id="easy" value="EASY">
-        <label class="form-check-label" for="flexRadioDefault1">
-          Easy
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="difficulty" id="medium" value="MEDIUM">
-        <label class="form-check-label" for="flexRadioDefault1">
-          Medium
-        </label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="difficulty" id="hard" value="HARD">
-        <label class="form-check-label" for="flexRadioDefault2">
-          Hard
-        </label>
-      </div>
-     </div>
-      <div class="form-group">
-        <h4><label for="usr">Test Cases:</label></h4>
-        <textarea name="testcases" class="form-control" required></textarea>
-      </div>
-      <input class="button button1" type="submit" value="Add Question">
-    </form>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="difficulty" id="medium" value="MEDIUM">
+      <label class="form-check-label" for="flexRadioDefault1">Medium</label>
     </div>
-      <!--Function name: <input type="text" name="name" required> <br>
-      Problem description
-      <textarea name="detail" required></textarea> <br>
-      Testcases
-      <textarea name="testcases" required></textarea> <br><-->
 
-  </body>
-</html>
+    <div class="form-check">
+      <input class="form-check-input" type="radio" name="difficulty" id="hard" value="HARD">
+      <label class="form-check-label" for="flexRadioDefault2">Hard</label>
+    </div>
+  </div>
+  <br>
+
+  <!-- Testcases -->
+  <div class="form-group">
+    <h4><label for="usr">Test Cases:</label></h4>
+    <textarea name="testcases" class="form-control" required></textarea>
+  </div>
+  <br>
+
+  <!-- Submit -->
+  <input class="button button1" type="submit" value="Add Question">
+  <br>
+
+</form>
+{% endblock %}

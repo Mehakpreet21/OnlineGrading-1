@@ -80,6 +80,7 @@ def gradeExam(request, exam_pk):
 
             is_named_correctly = check_name(q_data['function_name'], submission)
             answer.name_correct = is_named_correctly
+            answer.name_max_points = item_score
             if is_named_correctly:
                 answer.name_autograde_points = item_score
                 answer.name_points = item_score
