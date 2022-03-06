@@ -8,6 +8,7 @@ django = "*"
 install = "*"
 gunicorn = "*"
 whitenoise = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 
