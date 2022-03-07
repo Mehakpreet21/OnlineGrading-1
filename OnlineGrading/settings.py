@@ -26,7 +26,7 @@ SECRET_KEY = getenv("SECRET_KEY", 'django-insecure-xj!1x)9_(v_c&x5gk2@z@2ut(9$2z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = getenv("PyEnv", "DEV") != "PRODUCTION"
 
-ALLOWED_HOSTS = ['onlinegrading.herokuapp.com', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['onlinegrading.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
