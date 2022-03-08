@@ -2,15 +2,47 @@
 
 {% block title %}Grade Exams{% endblock %}
 
+{% block head %}
+<style>
+  .button {
+    background-color: #00000F; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+  }
+  .button1:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+</style>
+{% endblock %}
+
+{% block header %}
+<div class="jumbotron" style="background-color: #FFBDBD;">
+  <div class="container">
+    <h1 class="display-4">Grade Exams</h1>
+    <p>
+        Only exams assigned to students are shown here.
+        Grading an exam will unassign it to students.
+    </p>
+    <br>
+  </div>
+</div>
+{% endblock %}
+
 {% block content %}
-
-<h1>Grade Exams</h1>
-<p>
-    Only exams assigned to students are shown here.
-    Grading an exam will unassign it to students. 
-</p>
-<br>
-
 
 <table class="table">
     <thead>
@@ -28,7 +60,9 @@
                 <a href="{% url 'exam:exams-detail' exam.pk %}">Exam Details</a>
             </td>
             <td>
-                <a href="{% url 'exam:grade-exam' exam.pk %}">Grade Exams</a>
+                <a href="{% url 'exam:grade-exam' exam.pk %}">
+                  <button class="button button1">Autograde Exams</button>
+                </a>
             </td>
         </tr>
 
@@ -37,5 +71,10 @@
         {% endfor %}
     </tbody>
 </table>
+
+<a href="/">
+  <button class="button button1" name="start">Back</button>
+</a>
+
 
 {% endblock %}

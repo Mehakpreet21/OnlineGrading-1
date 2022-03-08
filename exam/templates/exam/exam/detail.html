@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}Exam Details{% endblock %}
 
 {% block head %}
 <style>
@@ -38,10 +38,8 @@
 </style>
 {% endblock %}
 
-
-
 {% block header %}
-<div class="jumbotron">
+<div class="jumbotron" style="background-color: #FFFBBD;">
   <div class="container">
     <h1 class="display-4">{{ exam.name }} Details</h1>
     <p class="lead">Details for exam {{ exam.name }} provided on this page.</p>
@@ -73,7 +71,7 @@
       <tr>
         <!-- Question -->
         <td>
-          <a href="{% url 'exam:questions-detail' eq.pk %}" target="_blank">
+          <a href="{% url 'exam:questions-detail' eq.question.pk %}" target="_blank">
             {{eq.question.name}} - {{eq.question.difficulty}}</a>
         </td>
         <!-- Points -->

@@ -2,14 +2,46 @@
 
 {% block title %}Results{% endblock %}
 
-{% block content %}
+{% block head %}
+<style>
+  .button {
+    background-color: #00000F; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  .button1 {
+    background-color: white;
+    color: black;
+    border: 2px solid #008CBA;
+  }
+  .button1:hover {
+    background-color: #008CBA;
+    color: white;
+  }
+</style>
+{% endblock %}
 
-<h1>{{ request.user.email }}</h1>
-<p>
-    Exams you have taken will be shown here after grading
-</p>
+{% block header %}
+
+<div class="jumbotron" style="background-color: #BDFFBF;">
+  <div class="container">
+    <h1 class="display-4">{{ request.user.email }}</h1>
+    <p>Exam results will show up below once they have been graded!</p><br>
+  </div>
+</div>
 <br>
 
+{% endblock %}
+
+{% block content %}
 
 <table class="table">
     <thead>
@@ -34,5 +66,9 @@
         {% endfor %}
     </tbody>
 </table>
+
+<a href="/">
+  <button class="button button1" name="start">Back</button>
+</a>
 
 {% endblock %}

@@ -26,13 +26,17 @@
     background-color: #008CBA;
     color: white;
   }
+
+  textarea {
+    width: 100%;
+  }
 </style>
 {% endblock %}
 
 
 
 {% block header %}
-<div class="jumbotron">
+<div class="jumbotron" style="background-color: #F5FFBD;">
   <div class="container">
     <h1 class="display-4">{{ exam.name }}</h1>
     <p class="lead">This exam was created {{ exam.created|date }} {{ exam.created|time }}</p>
@@ -70,4 +74,19 @@
   <button type="submit" value="Submit Exam" class="button button1" name="submit">Submit Exam</button>
   <br>
 </form>
+{% endblock %}
+
+
+{% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$( document ).ready(function() {
+  $('textarea').on('keydown', function(e) {
+    if(e.key === 'Tab') {
+      e.preventDefault();
+      $(this).val($(this).val() + '    ')
+   }
+  })
+});
+</script>
 {% endblock %}
