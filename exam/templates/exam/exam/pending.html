@@ -29,15 +29,18 @@
 </style>
 {% endblock %}
 
-{% block content %}
+{% block header %}
+
 <div class="jumbotron" style="background-color: #C8E381;">
   <div class="container">
     <h1 class="display-4">Exams to take</h1>
+    <p>These are the exams assigned to you</p><br>
   </div>
 </div>
 
-<p>These are the exams assigned to you</p><br>
+{% endblock %}
 
+{% block content %}
 
 <table class="table">
     <thead>

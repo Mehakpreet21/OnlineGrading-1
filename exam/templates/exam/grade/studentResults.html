@@ -29,15 +29,19 @@
 </style>
 {% endblock %}
 
-{% block content %}
+{% block header %}
 
-<div class="jumbotron">
+<div class="jumbotron" style="background-color: #BDFFBF;">
   <div class="container">
     <h1 class="display-4">{{ request.user.email }}</h1>
-    <p>Exam results will show up below once they have been graded!</p>
+    <p>Exam results will show up below once they have been graded!</p><br>
   </div>
 </div>
 <br>
+
+{% endblock %}
+
+{% block content %}
 
 <table class="table">
     <thead>
