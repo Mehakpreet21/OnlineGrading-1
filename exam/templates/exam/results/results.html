@@ -2,6 +2,47 @@
 
 {% block title %}Exam Results{% endblock %}
 
+{% block head %}
+
+<style>
+   .button {
+      background-color: #00000F; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+    .button1 {
+      background-color: white;
+      color: black;
+      border: 2px solid #008CBA;
+    }
+    .button1:hover {
+      background-color: #008CBA;
+      color: white;
+    }
+</style>
+
+{% endblock %}
+
+{% block header %}
+<div class="jumbotron" style="background-color: #92FFB2;">
+  <div class="container">
+    <h1>Exam Results - {{ taken_by.email }} </h1>
+    <h4>Exam Name: {{ exam.name }}</h4>
+    <h4>Created: {{ exam.created|date }}</h4>
+    <h4>This exam was submitted at: {{ taken_at|date }} {{ taken_at|time }}</h4>
+  </div>
+</div>
+
+{% endblock %}
+
 {% block content %}
 
 <!-- if can_edit wrap in form -->
@@ -9,13 +50,6 @@
 <form method="POST">
 {% csrf_token %}
 {% endif %}
-
-
-<h1>Exam Results - {{ taken_by.email }} </h1>
-<h4>Exam Name: {{ exam.name }}</h4>
-<h4>Created: {{ exam.created|date }}</h4>
-<h4>This exam was submitted at: {{ taken_at|date }} {{ taken_at|time }}</h4>
-<br>
 
 <h4>Comments:</h4>
 {% if can_edit %}
@@ -114,6 +148,10 @@
 </form>
 <br><br><br>
 {% endif %}
+
+<button class="button button1" name="start">
+  <a href="/">Back</a>
+</button>
 
 {% endblock %}
 

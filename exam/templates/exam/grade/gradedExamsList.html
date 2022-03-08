@@ -2,10 +2,45 @@
 
 {% block title %}Grade Exams{% endblock %}
 
-{% block content %}
+{% block head %}
 
-<h1>{{ exam.name }}</h1>
-<h3>Graded Exams</h3>
+<style>
+   .button {
+      background-color: #00000F; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+    .button1 {
+      background-color: white;
+      color: black;
+      border: 2px solid #008CBA;
+    }
+    .button1:hover {
+      background-color: #008CBA;
+      color: white;
+    }
+</style>
+
+{% endblock %}
+
+{% block header %}
+<div class="jumbotron" style="background-color: #F5FFBD;">
+  <div class="container">
+    <h1>{{ exam.name }}</h1>
+    <h3>Graded Exams</h3>
+  </div>
+</div>
+{% endblock %}
+
+{% block content %}
 
 <table class="table">
     <thead>
@@ -31,5 +66,8 @@
     </tbody>
 </table>
 
+<button class="button button1" name="start">
+  <a href="/">Back</a>
+</button>
 
 {% endblock %}
