@@ -60,7 +60,9 @@
                 <a href="{% url 'exam:exams-detail' exam.pk %}">Exam Details</a>
             </td>
             <td>
-                <a href="{% url 'exam:grade-exam' exam.pk %}">Grade Exams</a>
+                <a href="{% url 'exam:grade-exam' exam.pk %}">
+                  <button class="button button1">Autograde Exams</button>
+                </a>
             </td>
         </tr>
 
@@ -70,8 +72,9 @@
     </tbody>
 </table>
 
-<button class="button button1" name="start">
-  <a href="/">Back</a>
-</button>
+<a href="/">
+  <button class="button button1" name="start">Back</button>
+</a>
+
 
 {% endblock %}

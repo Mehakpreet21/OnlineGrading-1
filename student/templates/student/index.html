@@ -45,9 +45,9 @@
     <h1 class="display-4">Welcome, Student {{ request.user.email }}.</h1>
     <p class="lead">This is your home page</p>
 
-    <button class="button button1" name="start">
-      <a href="{% url 'authentication:logout' %}">Logout</a>
-    </button>
+    <a href="{% url 'authentication:logout' %}">
+      <button class="button button1" name="start">Logout</button>
+    </a>
   </div>
 </div>
 {% endblock %}
