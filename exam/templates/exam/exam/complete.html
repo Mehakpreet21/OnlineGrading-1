@@ -32,18 +32,16 @@
 
 
 {% block header %}
-<div class="jumbotron">
+<div class="jumbotron" style="background-color: #BDFFBF;">
   <div class="container">
     <h1 class="display-4">Exam Submitted</h1>
     <p class="lead">Thank you for taking the exam {{ request.user.email }}!</p>
-
-    <button class="button button1" name="start">
-      <a href="/">Back</a>
-    </button>
   </div>
 </div>
 {% endblock %}
 
-
 {% block content %}
+<button class="button button1" name="start">
+  <a href="/">Back</a>
+</button>
 {% endblock %}

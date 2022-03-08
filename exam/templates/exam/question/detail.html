@@ -4,13 +4,34 @@
 
 {% block head %}
 <style>
+   .button {
+      background-color: #00000F; /* Green */
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+    .button1 {
+      background-color: white;
+      color: black;
+      border: 2px solid #008CBA;
+    }
+    .button1:hover {
+      background-color: #008CBA;
+      color: white;
+    }
 </style>
 {% endblock %}
 
 
-
 {% block header %}
-<div class="jumbotron">
+<div class="jumbotron" style="background-color: #F5FFBD;">
   <div class="container">
     <h1 class="display-4">Question #{{ question.pk }} Details</h1>
     <p class="lead">Details for question #{{ question.pk }} provided on this page</p>
@@ -35,7 +56,7 @@
 {{ question.detail }} <br>
 <h4>Testcases:<br></h4>
 <pre>
-{{ question.testcases }} 
+{{ question.testcases }}
 </pre>
 <br>
 <p></p>
