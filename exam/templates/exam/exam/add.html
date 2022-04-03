@@ -27,79 +27,152 @@
     background-color: #008CBA;
     color: white;
   }
+
+  .split {
+  height: 100%;
+  width: 47%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 200px;
+  }
+
+  /* header above split screen */
+  .header{
+    width:100%;
+    height:65px;
+    position:fixed;
+    z-index:100;
+    background-color:#F00;
+  }
+
+  /* Control the left side */
+  .left {
+    left: 0;
+    background-color: white;
+  }
+  /* Control the right side */
+  .right {
+    right: 0;
+    background-color: white;
+  }
+
+  /* If you want the content centered horizontally and vertically */
+  .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
 </style>
 {% endblock %}
 
-
-
 {% block header %}
-<div class="jumbotron" style="background-color: #C8E381;">
-  <div class="container">
-    <h1 class="display-4">Create New Exam</h1>
-    <p class="lead">Here you can choose questions from Question bank for an Exam.</p>
+<div class="header">
+  <div class="jumbotron" style="background-color: #C8E381;">
+    <div class="container">
+      <h1 class="display-4">Create New Exam</h1>
+      <p class="lead">Here you can choose questions from Question bank for an Exam.</p>
 
-    <button class="button button1" name="start">
-      <a href="/">Back</a>
-    </button>
+      <button class="button button1" name="start">
+        <a href="/">Back</a>
+      </button>
+    </div>
   </div>
 </div>
-{% endblock %}
+  {% endblock %}
 
-
-{% block content %}
-<br>
-<form method="POST">
-  {% csrf_token %}
-
-  <!-- Exam Name -->
-  <div class="form-group">
-    <label for="QuestionName">Exam name</label>
-    <input type="text" required class="form-control" id="exam_name" required placeholder="Exam Name" name="name">
-  </div>
+  {% block content %}
+<div class="split left">
   <br>
+  <form method="POST">
+    {% csrf_token %}
 
+    <!-- Exam Name -->
+    <div class="form-group">
+      <label for="QuestionName">Exam name</label>
+      <input type="text" required class="form-control" id="exam_name" required placeholder="Exam Name" name="name">
+    </div>
+    <br>
+
+    <!--Current Questions Added-->
+    <table class="table">
+      <thead>
+        <th>Question Added</th>
+        <th>Points</th>
+      </thead>
+      <tbody>
+
+        {% for q in questions %}
+          <tr>
+            <!-- Question
+            <td>
+              <a href="{% url 'exam:questions-detail' q.pk %}" target="_blank">{{q.name}} - {{q.difficulty}}</a>
+            </td> -->
+            <!-- Select
+            <td>
+              <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
+            </td>
+            -->
+            <!-- Points
+            <td>
+              <input type="number" name="questions[{{ forloop.counter }}]" value="0" />
+            </td> -->
+          </tr>
+        {% empty %}
+        <tr>
+          <td>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+    <br>
+    <!-- Assign -->
+    <input type="checkbox" id="is_assigned" name="is_assigned" value="assigned">
+    <label for="is_assigned"> Assign To Students </label>
+    <br>
+
+    <!-- Submit -->
+    <button class="button button1" type="submit" value="Create Exam">Create Exam</button>
+    <br>
+  </form>
+</div>
+
+<!-- right side of screen, question bank -->
+<div class="split right">
   <table class="table">
     <thead>
-      <th>Question</th>
-      <th>Select</th>
-      <th>Points</th>
+      <th>#</th>
+      <th>Function Name</th>
+      <th>Difficulty</th>
+      <th>Category</th>
+      <th>Created</th>
+      <th>Details</th>
+      <th>Add to Exam?</th>
     </thead>
     <tbody>
+      {% for question in question_list %}
 
-      {% for q in questions %}
-        <tr>
-          <!-- Question -->
-          <td>
-            <a href="{% url 'exam:questions-detail' q.pk %}" target="_blank">{{q.name}} - {{q.difficulty}}</a>
-          </td>
-          <!-- Select -->
-          <td>
-            <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
-          </td>
-          <!-- Points -->
-          <td>
-            <input type="number" name="questions[{{ forloop.counter }}]" value="0" />
-          </td>
-        </tr>
-      {% empty %}
       <tr>
-        <td>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </td>
+        <td>{{ question.pk }}</td>
+        <td>{{ question.name }}</td>
+        <td>{{ question.difficulty }}</td>
+        <td>{{ question.category }}</td>
+        <td>{{ question.created|date }}</td>
+        <td>
+          <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
+        </td>
+        <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
       </tr>
-      {% endfor %}
 
+      {% empty %}
+      <tr>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </tr>
+      {% endfor %}
     </tbody>
   </table>
-
-
-  <br>
-  <!-- Assign -->
-  <input type="checkbox" id="is_assigned" name="is_assigned" value="assigned">
-  <label for="is_assigned"> Assign To Students </label>
-  <br>
-
-  <!-- Submit -->
-  <button class="button button1" type="submit" value="Create Exam">Create Exam</button>
-  <br>
-
-</form>
+</div>
 {% endblock %}
