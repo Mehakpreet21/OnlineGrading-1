@@ -41,13 +41,13 @@ def gradeExam(request, exam_pk):
     exam = get_object_or_404(Exam, pk=exam_pk)
 
     # Build Question Data
-    # Store points, params, expected outputs and processed testcases to append 
+    # Store points, params, expected outputs and processed testcases to append
     question_data = {} # { questionPk: { function_name, points, params, output, append } }
     exam_questions = ExamQuestion.objects.filter(exam=exam)
     for eq in exam_questions:
         function_name = eq.question.name
         params, outputs = get_params_output_from_testcases(function_name, eq.question.testcases)
-        
+
         testcases_append = ["\n\n", ]
         for p in params:
             testcases_append.append(f"print({p})\n")
@@ -57,6 +57,7 @@ def gradeExam(request, exam_pk):
             "points": eq.points,
             "params": params,
             "outputs": outputs,
+            "constraint"=constraint,
             "append": "".join(testcases_append)
         }
 
@@ -71,16 +72,17 @@ def gradeExam(request, exam_pk):
         for answer in student_answers:
             q_data = question_data[answer.question.pk]
 
-            scoreable_items = len(q_data['params']) + 1 # Number of items to score. correct name, testcase1, etc 
+            scoreable_items = len(q_data['params']) + 1 # Number of items to score. correct name, testcase1, etc
             item_score = q_data['points'] / float(scoreable_items) # each item is this many points
 
 
             ## check if function is named correctly, correct if not. score accordingly
             submission = answer.submission
-
+            has_constraint = check_constraint(q_data['constraint']) #must be only one constraint, as parameter only takes a string object
             is_named_correctly = check_name(q_data['function_name'], submission)
             answer.name_correct = is_named_correctly
             answer.name_max_points = item_score
+            #still to add point checker for constraint
             if is_named_correctly:
                 answer.name_autograde_points = item_score
                 answer.name_points = item_score
@@ -99,10 +101,10 @@ def gradeExam(request, exam_pk):
             graded_testcases = grade_testcases(q_data["params"], q_data["outputs"], student_output, item_score)
             for item in graded_testcases:
                 testcases_insert.append(AnswerTestCase(
-                    answer=answer, testcase=item[0], expected=item[1], actual=item[2], 
+                    answer=answer, testcase=item[0], expected=item[1], actual=item[2],
                     points_autograde=item[3], point_manual=item[3]
                 ))
-            
+
             AnswerTestCase.objects.bulk_create(testcases_insert)
             answer.save()
 
@@ -115,4 +117,3 @@ def gradeExam(request, exam_pk):
     exam.save()
 
     return render(request, 'exam/grade/gradedExamsList.html', { "exam": exam, "graded_list": taken_exams  })
-
