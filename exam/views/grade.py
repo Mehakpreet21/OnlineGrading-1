@@ -57,7 +57,7 @@ def gradeExam(request, exam_pk):
             "points": eq.points,
             "params": params,
             "outputs": outputs,
-            "constraint"=constraint,
+            "constraint":constraint,
             "append": "".join(testcases_append)
         }
 

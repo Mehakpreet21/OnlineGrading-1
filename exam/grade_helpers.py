@@ -80,7 +80,9 @@ def correct_name(expected_function_name: str, raw_submission: str) -> str:
 
     return raw_submission + definition
 
-def check_constraint(constraint):
+def check_constraint(constraint: str, raw_submission: str) -> bool:
+    if constraint=='none':
+        return True
     for line in raw_submission.splitlines():
         for word in line:
             if (word==constraint):
