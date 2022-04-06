@@ -39,23 +39,74 @@
     <button class="button button1" name="start">
       <a href="{% url 'exam:questions-add' %}">Add a new question</a>
     </button>
+    <p></p>
     <br>
   </div>
 </div>
 
-<div class="dropdown">
+
+<!-- <div class="dropdown">
   <button onclick="myFunction()" class="dropbtn">Difficulty</button>
   <div id="myDropdown" class="dropdown-content">
-    <input type="text" placeholder="Search..." id="myInput" onkeyup="filterFunction()">
+
     <a href="#easy">EASY</a>
     <a href="#medium">MEDIUM</a>
     <a href="#hard">HARD</a>
   </div>
-</div>
+</div> -->
 {% endblock %}
 
 
 {% block content %}
+<p></p>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left:50px">
+  <a class="navbar-brand" href="#"> Filters:</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <p></p>
+      </li>
+      <li class="nav-item dropdown" style="padding-left:150px">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Difficulty
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="#">Easy</a></li>
+            <li><a class="dropdown-item" href="#">Medium</a></li>
+            <li><a class="dropdown-item" href="#">Hard</a></li>
+          </ul>
+        </div>
+      </li>
+      <li class="nav-item dropdown"style="padding-left:150px">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            Topics
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <!-- {% for topic in topic_list %}
+            <li><a class="dropdown-item" href="#">{{ topic.name }}</a></li>
+            {% empty %}
+            <li>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </li>
+            {% endfor %}
+            -->
+            <li><a class="dropdown-item" href="#">A</a></li>
+            <li><a class="dropdown-item" href="#">B</a></li>
+            <li><a class="dropdown-item" href="#">C</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+    <div class="input-group" style="padding-left:250px; padding-right:50px">
+      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+      <button type="button" class="btn btn-outline-primary">search</button>
+    </div>
+</nav>
 
 <table class="table">
   <thead>
