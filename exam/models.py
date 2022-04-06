@@ -49,6 +49,14 @@ class Question(models.Model):
 
     topic = models.CharField(max_length=10, choices=Topic.choices, default=Topic.MATH)
 
+    class Constraint(models.TextChoices):
+        NONE = 'NONE', _('None')
+        FOR = 'FOR', _('For Loop')
+        WHILE = 'WHILE', _('While Loop')
+        IF = 'IF', _('if')
+
+    constraint = models.CharField(max_length=10, choices=Constraint.choices, default=Constraint.NONE)
+
 
     def __str__(self):
         return self.name
