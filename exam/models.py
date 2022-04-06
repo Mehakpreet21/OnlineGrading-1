@@ -38,6 +38,17 @@ class Question(models.Model):
         HARD = 'HARD', _('HARD')
 
     difficulty = models.CharField(max_length=10, choices=Difficulty.choices, default=Difficulty.EASY)
+    
+    class Topic(models.TextChoices):
+        MATH = 'MATH', _('Math')
+        ARRAYS = 'ARRAYS', _('Arrays')
+        FORLOOP = 'FORLOOP', _('For Loop')
+        WHILELOOP = 'WHILELOOP', _('While Loop')
+        RECURSION = 'RECURSION', _('Recursion')
+        IF = 'IF', _('if')
+
+    topic = models.CharField(max_length=10, choices=Topic.choices, default=Topic.MATH)
+
 
     def __str__(self):
         return self.name
