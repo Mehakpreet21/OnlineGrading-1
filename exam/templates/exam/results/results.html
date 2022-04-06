@@ -45,7 +45,7 @@
 
 {% block content %}
 
-<!-- if can_edit wrap in form -->
+<!-- if can_edit wrap in form --> 
 {% if can_edit %}
 <form method="POST">
 {% csrf_token %}
@@ -134,6 +134,14 @@
 
 <h5>Total Points (autograded): {{ q.points_autograde }} / {{ q.max_possible_points }} </h5>
 <h5>Total Points (Manually Adjusted): {{ q.points_total }} / {{ q.max_possible_points }} </h5>
+
+<h4>Comment:</h4>
+{% if can_edit %}
+    <textarea name="answerComment[{{ q.answer.pk }}]">{{ q.answer.comment }}</textarea>
+{% else %}
+    <p>{% if q.answer.comment %} {{ q.answer.comment }} {% else %} No Comment {% endif %}</p>
+{% endif %}
+
 
 <hr>
 <br><br>

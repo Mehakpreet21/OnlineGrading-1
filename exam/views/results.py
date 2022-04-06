@@ -117,6 +117,12 @@ class ExamResultsView(View):
                 tc.point_manual = float(val)
                 tc.save()
 
+            if key.startswith("answerComment"):
+                pk = int(key[14:-1])
+                ans = Answer.objects.get(pk=pk)
+                ans.comment = val
+                ans.save()
+
 
         return self.get(request, **kwargs)
 
