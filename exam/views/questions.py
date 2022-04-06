@@ -25,12 +25,14 @@ class QuestionAdd(View):
     template_name = 'exam/question/add.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        questions = Question.objects.all()
+
+        return render(request, self.template_name, { "question_list":questions })
 
     def post(self, request):
         question = Question(
             name=request.POST['name'], 
-            detail=request.POST['detail'], 
+            detail=request.POST['detail'],
             testcases=request.POST['testcases'],
             difficulty=request.POST['difficulty'])
 
@@ -43,4 +45,3 @@ class QuestionAdd(View):
 class QuestionDetail(DetailView):
     model = Question
     template_name = 'exam/question/detail.html'
-

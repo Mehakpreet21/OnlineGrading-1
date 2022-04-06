@@ -175,9 +175,12 @@
               <li>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </li>
               {% endfor %}
               -->
-              <li><a class="dropdown-item" href="#">A</a></li>
-              <li><a class="dropdown-item" href="#">B</a></li>
-              <li><a class="dropdown-item" href="#">C</a></li>
+              <li><a class="dropdown-item" href="#">FORLOOP</a></li>
+              <li><a class="dropdown-item" href="#">WHILELOOP</a></li>
+              <li><a class="dropdown-item" href="#">RECURSION</a></li>
+              <li><a class="dropdown-item" href="#">MATH</a></li>
+              <li><a class="dropdown-item" href="#">ARRAYS</a></li>
+              <li><a class="dropdown-item" href="#">IF</a></li>
             </ul>
           </div>
         </li>
@@ -199,7 +202,8 @@
       <th>Add to Exam?</th>
     </thead>
     <tbody>
-      {% for question in question_list %}
+      {% for question in questions %}
+
 
       <tr>
         <td>{{ question.pk }}</td>
