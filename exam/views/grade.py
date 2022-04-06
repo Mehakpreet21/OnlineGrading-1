@@ -5,7 +5,7 @@ from django.shortcuts import render, get_object_or_404
 from authentication.decorators import teacher_required, student_required
 from exam.models import Exam, ExamQuestion, TakenExam, Answer, AnswerTestCase
 
-from exam.grade_helpers import get_params_output_from_testcases, get_output, check_name, correct_name, grade_testcases
+from exam.grade_helpers import check_constraint, get_params_output_from_testcases, get_output, check_name, correct_name, grade_testcases
 
 # Create your views here.
 
@@ -57,7 +57,7 @@ def gradeExam(request, exam_pk):
             "points": eq.points,
             "params": params,
             "outputs": outputs,
-            "constraint":constraint,
+            "constraint": eq.question.constraint,
             "append": "".join(testcases_append)
         }
 
