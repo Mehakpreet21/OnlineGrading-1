@@ -81,7 +81,7 @@
 {% block content %}
 <form method="POST">
   {% csrf_token %}
-<div class="split left">
+<div class="split left" style="padding-left:35px">
   <!-- Function Name -->
   <br>
   <br>
@@ -121,7 +121,11 @@
       <h4><label for="usr">Constraint?</label></h4>
       <div class="form-check">
         <input class="form-check-input" type="radio" name="constraint" id="if" value="IF">
+<<<<<<< HEAD
         <label class="form-check-label" for="flexRadioDefault1">If Statement</label>
+=======
+        <label class="form-check-label" for="flexRadioDefault1">If Condition</label>
+>>>>>>> 0659f6b961af0a8334c0d2d5fe289775a053ff13
       </div>
 
       <div class="form-check">
@@ -161,9 +165,62 @@
   <button class="button button1" name="start">Back</button>
 </a>
 
-<div class="split right">
+<div class="split right" style="padding-right:35px">
+  <p></p>
+  <p></p>
+  <p></p>
+  <p></p>
   <br>
   <br>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left:5px">
+    <a class="navbar-brand" href="#"> Filters:</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <p></p>
+        </li>
+        <li class="nav-item dropdown" style="padding-left:15px">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Difficulty
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" href="#">Easy</a></li>
+              <li><a class="dropdown-item" href="#">Medium</a></li>
+              <li><a class="dropdown-item" href="#">Hard</a></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item dropdown"style="padding-left:15px">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Topics
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <!-- {% for topic in topic_list %}
+              <li><a class="dropdown-item" href="#">{{ topic.name }}</a></li>
+              {% empty %}
+              <li>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </li>
+              {% endfor %}
+              -->
+              <li><a class="dropdown-item" href="#">A</a></li>
+              <li><a class="dropdown-item" href="#">B</a></li>
+              <li><a class="dropdown-item" href="#">C</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <div class="input-group" style="padding-left:25px; padding-right:5px">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+        <button type="button" class="btn btn-outline-primary">search</button>
+      </div>
+  </nav>
+  <br>
+  
   <table class="table">
     <thead>
       <th>#</th>
