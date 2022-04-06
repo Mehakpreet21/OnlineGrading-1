@@ -1,3 +1,4 @@
+from curses import raw
 import subprocess
 
 
@@ -81,13 +82,8 @@ def correct_name(expected_function_name: str, raw_submission: str) -> str:
     return raw_submission + definition
 
 def check_constraint(constraint: str, raw_submission: str) -> bool:
-    if constraint=='none':
-        return True
-    for line in raw_submission.splitlines():
-        for word in line:
-            if (word==constraint):
-                return True
-    return False
+    return constraint in raw_submission
+
 
 def get_output(source_code):
     try:

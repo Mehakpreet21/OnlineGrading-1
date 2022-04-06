@@ -73,12 +73,14 @@ def gradeExam(request, exam_pk):
             q_data = question_data[answer.question.pk]
 
             scoreable_items = len(q_data['params']) + 1 # Number of items to score. correct name, testcase1, etc
+            if q_data['constraint'] != "NONE": # if constraint is set include it as a scoreable item
+                scoreable_items += 1
             item_score = q_data['points'] / float(scoreable_items) # each item is this many points
 
 
             ## check if function is named correctly, correct if not. score accordingly
             submission = answer.submission
-            has_constraint = check_constraint(q_data['constraint']) #must be only one constraint, as parameter only takes a string object
+            
             is_named_correctly = check_name(q_data['function_name'], submission)
             answer.name_correct = is_named_correctly
             answer.name_max_points = item_score
@@ -104,6 +106,22 @@ def gradeExam(request, exam_pk):
                     answer=answer, testcase=item[0], expected=item[1], actual=item[2],
                     points_autograde=item[3], point_manual=item[3]
                 ))
+
+            ## Check Constraint 
+            if q_data['constraint'] != "NONE":
+                constraint_tc = AnswerTestCase(
+                    answer=answer, testcase=f"Constraint {q_data['constraint']}", expected=f"Uses {q_data['constraint']}",
+                    actual="NONE", points_autograde=0, point_manual=0 # assume no constraint 
+                )
+
+                # must be only one constraint, as parameter only takes a string object
+                has_constraint = check_constraint(q_data['constraint'], submission)
+                if has_constraint:
+                    constraint_tc.actual = f"Uses {q_data['constraint']}"
+                    constraint_tc.points_autograde=item_score, constraint_tc.points_manual=item_score, 
+
+                testcases_insert.append(constraint_tc)
+
 
             AnswerTestCase.objects.bulk_create(testcases_insert)
             answer.save()
