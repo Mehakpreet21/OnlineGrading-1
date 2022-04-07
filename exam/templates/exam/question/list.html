@@ -141,7 +141,7 @@
 
 <script>
   function onDifficultySelected(difficulty) {
-    if(difficulty === null) showAll()
+    if(difficulty === null) return showAll()
 
     const show = questions.filter(q => q.difficulty === difficulty)
     const showIds = show.map(q => q.id)
@@ -150,7 +150,7 @@
   }
 
   function onTopicSelected(topic) {
-    if(topic === null) showAll()
+    if(topic === null) return showAll()
 
     const show = questions.filter(q => q.topic === topic)
     const showIds = show.map(q => q.id)
