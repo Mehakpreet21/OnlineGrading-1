@@ -36,24 +36,11 @@
     <h1 class="display-4">Question Bank</h1>
     <p class="lead">This is a list of questions you can use for exams or quizzes</p>
 
-    <button class="button button1" name="start">
-      <a href="{% url 'exam:questions-add' %}">Add a new question</a>
-    </button>
-    <p></p>
+    <a href="{% url 'exam:questions-add' %}" class="button button1">Add a new question</a>
     <br>
   </div>
+  <br>
 </div>
-
-
-<!-- <div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Difficulty</button>
-  <div id="myDropdown" class="dropdown-content">
-
-    <a href="#easy">EASY</a>
-    <a href="#medium">MEDIUM</a>
-    <a href="#hard">HARD</a>
-  </div>
-</div> -->
 {% endblock %}
 
 
@@ -61,7 +48,7 @@
 <p></p>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left:50px">
-  <a class="navbar-brand" href="#"> Filters:</a>
+  <a class="navbar-brand"> Filters:</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -77,9 +64,10 @@
             Difficulty
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="#">Easy</a></li>
-            <li><a class="dropdown-item" href="#">Medium</a></li>
-            <li><a class="dropdown-item" href="#">Hard</a></li>
+            <li><button class="dropdown-item" onclick="onDifficultySelected('EASY')">Easy</button></li>
+            <li><button class="dropdown-item" onclick="onDifficultySelected('MEDIUM')">Medium</button></li>
+            <li><button class="dropdown-item" onclick="onDifficultySelected('HARD')">Hard</button></li>
+            <li><button class="dropdown-item" onclick="onDifficultySelected(null)">Clear Filter</button></li>
           </ul>
         </div>
       </li>
@@ -89,21 +77,19 @@
             Topics
           </button>
           <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <!-- {% for topic in topic_list %}
-            <li><a class="dropdown-item" href="#">{{ topic.name }}</a></li>
-            {% empty %}
-            <li>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </li>
-            {% endfor %}
-            -->
-            <li><a class="dropdown-item" href="#">A</a></li>
-            <li><a class="dropdown-item" href="#">B</a></li>
-            <li><a class="dropdown-item" href="#">C</a></li>
+            <li><button class="dropdown-item" onclick="onTopicSelected('FORLOOP')">For Loop</button></li>
+            <li><button class="dropdown-item" onclick="onTopicSelected('WHILELOOP')">While Loop</button></li>
+            <li><button class="dropdown-item" onclick="onTopicSelected('RECURSION')">Recursion</button></li>
+            <li><button class="dropdown-item" onclick="onTopicSelected('MATH')">Math</button></li>
+            <li><button class="dropdown-item" onclick="onTopicSelected('ARRAYS')">Arrays</button></li>
+            <li><button class="dropdown-item" onclick="onTopicSelected('IF')">If</button></li>
+            <li><button class="dropdown-item" onclick="onTopicSelected(null)">Clear Filter</button></li>
           </ul>
         </div>
       </li>
     </ul>
     <div class="input-group" style="padding-left:250px; padding-right:50px">
-      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onkeydown="keywordSearch(this.value)"/>
       <button type="button" class="btn btn-outline-primary">search</button>
     </div>
 </nav>
@@ -113,16 +99,20 @@
     <th>#</th>
     <th>Function Name</th>
     <th>Difficulty</th>
+    <th>Topic</th>
+    <th>Constraint</th>
     <th>Created</th>
     <th>Details</th>
   </thead>
   <tbody>
     {% for question in question_list %}
-
-    <tr>
+    <!-- -{{ question.name }}-{{ question.difficulty }}-{{ question.topic }} -->
+    <tr id="view-{{ question.pk }}">
       <td>{{ question.pk }}</td>
       <td>{{ question.name }}</td>
       <td>{{ question.difficulty }}</td>
+      <td>{{ question.topic }}</td>
+      <td>{{ question.constraint }}</td>
       <td>{{ question.created|date }}</td>
       <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
     </tr>
@@ -133,8 +123,60 @@
   </tbody>
 </table>
 
-<button class="button button1" name="start">
-  <a href="/">Back</a>
-</button>
 
+<a href="/" class="button button1">Back</a>
+
+{% endblock %}
+
+{% block scripts %}
+<!-- Question Bank -->
+<script>
+  // We create a JS array with our question data we can search through
+  const questions = [
+    {% for question in question_list %}
+      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}" },
+    {% endfor %}
+  ]
+</script>
+
+<script>
+  function onDifficultySelected(difficulty) {
+    if(difficulty === null) showAll()
+
+    const show = questions.filter(q => q.difficulty === difficulty)
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+  function onTopicSelected(topic) {
+    if(topic === null) showAll()
+
+    const show = questions.filter(q => q.topic === topic)
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+  function keywordSearch(keyword) {
+    const show = questions.filter(q => q.name.includes(keyword))
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+
+  function showAllInArray(showOnly) {
+    for(q of questions) {
+      if(showOnly.includes(q.id)) $(`#view-${q.id}`).show()
+      else $(`#view-${q.id}`).hide()
+    }
+  }
+
+  function showAll() {
+    for(q of questions) {
+      $(`#view-${q.id}`).show()
+    }
+  }
+</script>
 {% endblock %}

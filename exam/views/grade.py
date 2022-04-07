@@ -118,7 +118,8 @@ def gradeExam(request, exam_pk):
                 has_constraint = check_constraint(q_data['constraint'], submission)
                 if has_constraint:
                     constraint_tc.actual = f"Uses {q_data['constraint']}"
-                    constraint_tc.points_autograde=item_score, constraint_tc.points_manual=item_score, 
+                    constraint_tc.points_autograde = item_score
+                    constraint_tc.points_manual = item_score
 
                 testcases_insert.append(constraint_tc)
 

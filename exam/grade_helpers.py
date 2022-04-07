@@ -1,4 +1,5 @@
 from curses import raw
+from re import search
 import subprocess
 
 
@@ -82,7 +83,12 @@ def correct_name(expected_function_name: str, raw_submission: str) -> str:
     return raw_submission + definition
 
 def check_constraint(constraint: str, raw_submission: str) -> bool:
-    return constraint in raw_submission
+    mapping = {
+        "FOR": "for",
+        "WHILE": "while",
+        "IF": "if"
+    }
+    return mapping[constraint] in raw_submission
 
 
 def get_output(source_code):
