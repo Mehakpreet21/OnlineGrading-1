@@ -108,10 +108,10 @@
               <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
             </td>
             -->
-            <!-- Points
+            <!-- Points -->
             <td>
               <input type="number" name="questions[{{ forloop.counter }}]" value="0" />
-            </td> -->
+            </td>
           </tr>
         {% empty %}
         <tr>
@@ -196,7 +196,7 @@
       <th>#</th>
       <th>Function Name</th>
       <th>Difficulty</th>
-      <th>Category</th>
+      <th>Topic</th>
       <th>Created</th>
       <th>Add To Exam</th>
       <th>Details</th>
@@ -209,10 +209,11 @@
         <td>{{ question.pk }}</td>
         <td>{{ question.name }}</td>
         <td>{{ question.difficulty }}</td>
-        <td>{{ question.category }}</td>
+        <td>{{ question.topic }}</td>
         <td>{{ question.created|date }}</td>
         <td>
-          <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
+          <button type="button" name="add_to_exam" onclick="">Add</button>
+          <!-- <input type="button" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}"> -->
         </td>
         <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
       </tr>
@@ -223,4 +224,57 @@
     </tbody>
   </table>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Question Bank -->
+<script>
+  // We create a JS array with our question data we can search through
+  const questions = [
+    {% for question in question_list %}
+      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail:"{{ question.detail }}"},
+    {% endfor %}
+  ]
+</script>
+
+<script>
+  function onDifficultySelected(difficulty) {
+    if(difficulty === null) return showAll()
+
+    const show = questions.filter(q => q.difficulty === difficulty)
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+  function onTopicSelected(topic) {
+    if(topic === null) return showAll()
+
+    const show = questions.filter(q => q.topic === topic)
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+  function keywordSearch(keyword) {
+    const show = questions.filter(q => q.name.includes(keyword))
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+
+  function showAllInArray(showOnly) {
+    for(q of questions) {
+      if(showOnly.includes(q.id)) $(`#view-${q.id}`).show()
+      else $(`#view-${q.id}`).hide()
+    }
+  }
+
+  function showAll() {
+    for(q of questions) {
+      $(`#view-${q.id}`).show()
+    }
+  }
+</script>
 {% endblock %}

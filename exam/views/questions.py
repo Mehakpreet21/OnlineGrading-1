@@ -31,7 +31,7 @@ class QuestionAdd(View):
 
     def post(self, request):
         question = Question(
-            name=request.POST['name'], 
+            name=request.POST['name'],
             detail=request.POST['detail'],
             testcases=request.POST['testcases'],
             difficulty=request.POST['difficulty'],
