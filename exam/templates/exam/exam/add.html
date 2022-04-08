@@ -227,6 +227,7 @@
 {% endblock %}
 
 {% block scripts %}
+
 <!-- Question Bank -->
 <script>
   // We create a JS array with our question data we can search through
@@ -257,7 +258,7 @@
   }
 
   function keywordSearch(keyword) {
-    const show = questions.filter(q => q.name.includes(keyword))
+    const show = questions.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
     const showIds = show.map(q => q.id)
 
     showAllInArray(showIds)
