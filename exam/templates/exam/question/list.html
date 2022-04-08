@@ -134,7 +134,7 @@
   // We create a JS array with our question data we can search through
   const questions = [
     {% for question in question_list %}
-      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}" },
+      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail: "{{ question.detail }}"},
     {% endfor %}
   ]
 </script>
@@ -159,7 +159,7 @@
   }
 
   function keywordSearch(keyword) {
-    const show = questions.filter(q => q.name.includes(keyword))
+    const show = questions.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
     const showIds = show.map(q => q.id)
 
     showAllInArray(showIds)
