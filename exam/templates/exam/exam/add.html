@@ -203,9 +203,7 @@
     </thead>
     <tbody>
       {% for question in questions %}
-
-
-      <tr>
+    <tr>
         <td>{{ question.pk }}</td>
         <td>{{ question.name }}</td>
         <td>{{ question.difficulty }}</td>
@@ -214,8 +212,8 @@
         <td>
           <button type="button" name="add_to_exam" onclick="">Add</button>
           <!-- <input type="button" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}"> -->
-        </td>
         <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
+      </td>
       </tr>
 
       {% empty %}
@@ -232,8 +230,8 @@
 <script>
   // We create a JS array with our question data we can search through
   const questions = [
-    {% for question in question_list %}
-      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail:"{{ question.detail }}"},
+    {% for question in questions %}
+      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail: "{{ question.detail }}"},
     {% endfor %}
   ]
 </script>
