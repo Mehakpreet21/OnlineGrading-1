@@ -125,12 +125,12 @@
         <input class="form-check-input" type="radio" name="topic" id="MATH" value="MATH">
         <label class="form-check-label" for="flexRadioDefault1">Math</label>
       </div>
-  
+
       <div class="form-check">
         <input class="form-check-input" type="radio" name="topic" id="ARRAYS" value="ARRAYS">
         <label class="form-check-label" for="flexRadioDefault1">Arrays</label>
       </div>
-  
+
       <div class="form-check">
         <input class="form-check-input" type="radio" name="topic" id="FORLOOP" value="FORLOOP">
         <label class="form-check-label" for="flexRadioDefault2">For Loop</label>
@@ -180,7 +180,7 @@
         <label class="form-check-label" for="flexRadioDefault1">None</label>
       </div>
       <br>
-      
+
   </div>
   <br>
 
@@ -261,16 +261,18 @@
       <th>#</th>
       <th>Function Name</th>
       <th>Difficulty</th>
+      <th>Topic</th>
       <th>Created</th>
       <th>Details</th>
     </thead>
     <tbody>
       {% for question in question_list %}
 
-      <tr>
+      <tr id="view-{{ question.pk }}">
         <td>{{ question.pk }}</td>
         <td>{{ question.name }}</td>
         <td>{{ question.difficulty }}</td>
+        <td>{{ question.topic }}</td>
         <td>{{ question.created|date }}</td>
         <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
       </tr>
@@ -283,3 +285,55 @@
 </div>
 {% endblock %}
 
+{% block scripts %}
+<!-- Add a question -->
+<script>
+  // We create a JS array with our question data we can search through
+  const questions = [
+    {% for question in question_list %}
+      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail:"{{ question.detail }}"},
+    {% endfor %}
+  ]
+</script>
+
+<script>
+  function onDifficultySelected(difficulty) {
+    if(difficulty === null) return showAll()
+
+    const show = questions.filter(q => q.difficulty === difficulty)
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+  function onTopicSelected(topic) {
+    if(topic === null) return showAll()
+
+    const show = questions.filter(q => q.topic === topic)
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+  function keywordSearch(keyword) {
+    const show = questions.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+
+  function showAllInArray(showOnly) {
+    for(q of questions) {
+      if(showOnly.includes(q.id)) $(`#view-${q.id}`).show()
+      else $(`#view-${q.id}`).hide()
+    }
+  }
+
+  function showAll() {
+    for(q of questions) {
+      $(`#view-${q.id}`).show()
+    }
+  }
+</script>
+{% endblock %}

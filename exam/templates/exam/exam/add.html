@@ -90,7 +90,7 @@
     <br>
 
     <!--Current Questions Added-->
-    <table class="table">
+    <table class="table" id="exam_q_list">
       <thead>
         <th>Question Added</th>
         <th>Points</th>
@@ -106,12 +106,11 @@
             <!-- Select
             <td>
               <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
-            </td>
-            -->
-            <!-- Points -->
+            </td>-->
+            <!-- Points
             <td>
               <input type="number" name="questions[{{ forloop.counter }}]" value="0" />
-            </td>
+            </td>-->
           </tr>
         {% empty %}
         <tr>
@@ -191,7 +190,7 @@
       </div>
   </nav>
   <br>
-  <table class="table">
+  <table class="table" id="q_list">
     <thead>
       <th>#</th>
       <th>Function Name</th>
@@ -210,7 +209,7 @@
         <td>{{ question.topic }}</td>
         <td>{{ question.created|date }}</td>
         <td>
-          <button type="button" id="add_to_exam" type= "submit" name="add_to_exam">Add</button>
+          <button type="button" id="add_to_exam" type= "submit" name="add_to_exam" onclick="add_to_exam()">Add</button>
           <!-- <input type="button" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}"> -->
         <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
       </td>
@@ -274,6 +273,14 @@
     for(q of questions) {
       $(`#view-${q.id}`).show()
     }
+  }
+
+  function add_to_exam(){
+    var x = document.getElementById("add_to_exam").value
+    var rows = ""
+    var name = document.getElementById("add_to_exam").value
+    rows += "<tr><td>" + name + "</td><td>"
+    $(rows).appendTo("#exam_q_list tbody")
   }
 </script>
 {% endblock %}
