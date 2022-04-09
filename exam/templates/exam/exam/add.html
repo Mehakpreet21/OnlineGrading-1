@@ -212,7 +212,7 @@
         <td>{{ question.topic }}</td>
         <td>{{ question.created|date }}</td>
         <td>
-          <button type="button" name="add_to_exam" onclick="">Add</button>
+          <button type="button" id="add_to_exam" type= "submit" name="add_to_exam">Add</button>
           <!-- <input type="button" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}"> -->
         </td>
         <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
