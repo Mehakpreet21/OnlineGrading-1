@@ -187,23 +187,27 @@
     </div>
   </nav>
   <br>
+
   <table class="table">
     <thead>
       <th>#</th>
       <th>Function Name</th>
       <th>Difficulty</th>
       <th>Topic</th>
+      <th>Constraint</th>
       <th>Created</th>
       <th>Add To Exam</th>
       <th>Details</th>
     </thead>
     <tbody>
       {% for question in questions %}
-    <tr>
+      <!-- -{{ question.name }}-{{ question.difficulty }}-{{ question.topic }} -->
+      <tr id="view-{{ question.pk }}">
         <td>{{ question.pk }}</td>
         <td>{{ question.name }}</td>
         <td>{{ question.difficulty }}</td>
         <td>{{ question.topic }}</td>
+        <td>{{ question.constraint }}</td>
         <td>{{ question.created|date }}</td>
         <td>
           <button type="button" id="add_to_exam" type= "submit" name="add_to_exam">Add</button>
@@ -211,21 +215,21 @@
         </td>
         <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
       </tr>
-
+  
       {% empty %}
       <tr>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </tr>
       {% endfor %}
     </tbody>
-  </table>
+  </table> 
 </div>
 {% endblock %}
 
 {% block scripts %}
 
-<!-- Question Bank -->
+<!-- Exam Question Bank -->
 <script>
   // We create a JS array with our question data we can search through
-  const questions = [
+  const qs = [
     {% for question in questions %}
       { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail: "{{ question.detail }}"},
     {% endfor %}
@@ -236,7 +240,7 @@
   function onDifficultySelected(difficulty) {
     if(difficulty === null) return showAll()
 
-    const show = questions.filter(q => q.difficulty === difficulty)
+    const show = qs.filter(q => q.difficulty === difficulty)
     const showIds = show.map(q => q.id)
 
     showAllInArray(showIds)
@@ -245,14 +249,14 @@
   function onTopicSelected(topic) {
     if(topic === null) return showAll()
 
-    const show = questions.filter(q => q.topic === topic)
+    const show = qs.filter(q => q.topic === topic)
     const showIds = show.map(q => q.id)
 
     showAllInArray(showIds)
   }
 
   function keywordSearch(keyword) {
-    const show = questions.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
+    const show = qs.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
     const showIds = show.map(q => q.id)
 
     showAllInArray(showIds)
@@ -260,14 +264,14 @@
 
 
   function showAllInArray(showOnly) {
-    for(q of questions) {
+    for(q of qs) {
       if(showOnly.includes(q.id)) $(`#view-${q.id}`).show()
       else $(`#view-${q.id}`).hide()
     }
   }
 
   function showAll() {
-    for(q of questions) {
+    for(q of qs) {
       $(`#view-${q.id}`).show()
     }
   }
