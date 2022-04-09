@@ -92,14 +92,14 @@
     <!--Current Questions Added-->
     <table class="table" id="exam_q_list">
       <thead>
-        <th>Question Added</th>
+        <th id="added_q">Question Added</th>
         <th>Points</th>
       </thead>
       <tbody>
 
         {% for q in questions %}
           <tr>
-            <!-- Question
+            <!-- Question Added
             <td>
               <a href="{% url 'exam:questions-detail' q.pk %}" target="_blank">{{q.name}} - {{q.difficulty}}</a>
             </td> -->
@@ -107,10 +107,10 @@
             <td>
               <input type="checkbox" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}">
             </td>-->
-            <!-- Points
+            <!--Points
             <td>
               <input type="number" name="questions[{{ forloop.counter }}]" value="0" />
-            </td>-->
+            </td>  -->
           </tr>
         {% empty %}
         <tr>
@@ -140,7 +140,7 @@
   <p></p>
   <p></p>
   <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left:5px">
-    <a class="navbar-brand" href="#"> Filters:</a>
+    <a class="navbar-brand"> Filters:</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -156,9 +156,10 @@
               Difficulty
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" href="#">Easy</a></li>
-              <li><a class="dropdown-item" href="#">Medium</a></li>
-              <li><a class="dropdown-item" href="#">Hard</a></li>
+              <li><button class="dropdown-item" onclick="onDifficultySelected('EASY')">Easy</button></li>
+              <li><button class="dropdown-item" onclick="onDifficultySelected('MEDIUM')">Medium</button></li>
+              <li><button class="dropdown-item" onclick="onDifficultySelected('HARD')">Hard</button></li>
+              <li><button class="dropdown-item" onclick="onDifficultySelected(null)">Clear Filter</button></li>
             </ul>
           </div>
         </li>
@@ -168,26 +169,21 @@
               Topics
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <!-- {% for topic in topic_list %}
-              <li><a class="dropdown-item" href="#">{{ topic.name }}</a></li>
-              {% empty %}
-              <li>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </li>
-              {% endfor %}
-              -->
-              <li><a class="dropdown-item" href="#">FORLOOP</a></li>
-              <li><a class="dropdown-item" href="#">WHILELOOP</a></li>
-              <li><a class="dropdown-item" href="#">RECURSION</a></li>
-              <li><a class="dropdown-item" href="#">MATH</a></li>
-              <li><a class="dropdown-item" href="#">ARRAYS</a></li>
-              <li><a class="dropdown-item" href="#">IF</a></li>
+              <li><button class="dropdown-item" onclick="onTopicSelected('FORLOOP')">For Loop</button></li>
+              <li><button class="dropdown-item" onclick="onTopicSelected('WHILELOOP')">While Loop</button></li>
+              <li><button class="dropdown-item" onclick="onTopicSelected('RECURSION')">Recursion</button></li>
+              <li><button class="dropdown-item" onclick="onTopicSelected('MATH')">Math</button></li>
+              <li><button class="dropdown-item" onclick="onTopicSelected('ARRAYS')">Arrays</button></li>
+              <li><button class="dropdown-item" onclick="onTopicSelected('IF')">If</button></li>
+              <li><button class="dropdown-item" onclick="onTopicSelected(null)">Clear Filter</button></li>
             </ul>
           </div>
         </li>
       </ul>
-      <div class="input-group" style="padding-left:25px; padding-right:5px">
-        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-        <button type="button" class="btn btn-outline-primary">search</button>
-      </div>
+      <div class="input-group" style="padding-left:25px; padding-right:50px">
+      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onkeydown="keywordSearch(this.value)"/>
+      <button type="button" class="btn btn-outline-primary">search</button>
+    </div>
   </nav>
   <br>
   <table class="table" id="q_list">
@@ -196,23 +192,26 @@
       <th>Function Name</th>
       <th>Difficulty</th>
       <th>Topic</th>
+      <th>Constraint</th>
       <th>Created</th>
       <th>Add To Exam</th>
       <th>Details</th>
     </thead>
     <tbody>
       {% for question in questions %}
-    <tr>
+      <!-- -{{ question.name }}-{{ question.difficulty }}-{{ question.topic }} -->
+      <tr id="view-{{ question.pk }}">
         <td>{{ question.pk }}</td>
         <td>{{ question.name }}</td>
         <td>{{ question.difficulty }}</td>
         <td>{{ question.topic }}</td>
+        <td>{{ question.constraint }}</td>
         <td>{{ question.created|date }}</td>
         <td>
-          <button type="button" id="add_to_exam" type= "submit" name="add_to_exam" onclick="add_to_exam()">Add</button>
+          <button type="button" id="add_to_exam" type= "submit" name="add_to_exam" onclick="add_to_exam('{{ question.name }}')">Add</button>
           <!-- <input type="button" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}"> -->
+        </td>
         <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
-      </td>
       </tr>
 
       {% empty %}
@@ -225,10 +224,10 @@
 
 {% block scripts %}
 
-<!-- Question Bank -->
+<!-- Exam Question Bank -->
 <script>
   // We create a JS array with our question data we can search through
-  const questions = [
+  const qs = [
     {% for question in questions %}
       { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail: "{{ question.detail }}"},
     {% endfor %}
@@ -239,7 +238,7 @@
   function onDifficultySelected(difficulty) {
     if(difficulty === null) return showAll()
 
-    const show = questions.filter(q => q.difficulty === difficulty)
+    const show = qs.filter(q => q.difficulty === difficulty)
     const showIds = show.map(q => q.id)
 
     showAllInArray(showIds)
@@ -248,14 +247,14 @@
   function onTopicSelected(topic) {
     if(topic === null) return showAll()
 
-    const show = questions.filter(q => q.topic === topic)
+    const show = qs.filter(q => q.topic === topic)
     const showIds = show.map(q => q.id)
 
     showAllInArray(showIds)
   }
 
   function keywordSearch(keyword) {
-    const show = questions.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
+    const show = qs.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
     const showIds = show.map(q => q.id)
 
     showAllInArray(showIds)
@@ -263,22 +262,21 @@
 
 
   function showAllInArray(showOnly) {
-    for(q of questions) {
+    for(q of qs) {
       if(showOnly.includes(q.id)) $(`#view-${q.id}`).show()
       else $(`#view-${q.id}`).hide()
     }
   }
 
   function showAll() {
-    for(q of questions) {
+    for(q of qs) {
       $(`#view-${q.id}`).show()
     }
   }
 
-  function add_to_exam(){
-    var x = document.getElementById("add_to_exam").value
+  function add_to_exam(question_name){
     var rows = ""
-    var name = document.getElementById("add_to_exam").value
+    var name = question_name
     rows += "<tr><td>" + name + "</td><td>"
     $(rows).appendTo("#exam_q_list tbody")
   }
