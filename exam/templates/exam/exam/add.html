@@ -208,7 +208,7 @@
         <td>{{ question.constraint }}</td>
         <td>{{ question.created|date }}</td>
         <td>
-          <button type="button" id="add_to_exam" type= "submit" name="add_to_exam" onclick="add_to_exam('{{ question.name }}')">Add</button>
+          <button type="button" id="add_to_exam" type= "submit" name="add_to_exam" onclick="add_to_exam('{{ question.name }}', '{{ question.id }}')">Add</button>
           <!-- <input type="button" id="c-{{q.pk}}" name="questions[{{ forloop.counter }}]" value="{{q.pk}}"> -->
         </td>
         <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
@@ -274,10 +274,13 @@
     }
   }
 
-  function add_to_exam(question_name){
+  function add_to_exam(question_name, question_id){
+    // var rows = ""
+    // var name = question_name
+    // rows += "<tr><td>" + name + "</td><td>"
+    // $(rows).appendTo("#exam_q_list tbody")
     var rows = ""
-    var name = question_name
-    rows += "<tr><td>" + name + "</td><td>"
+    rows += `<tr><td>${question_name}</td><td> <input type="number" value="0" name="questions[${question_id}]"> </td></tr>`
     $(rows).appendTo("#exam_q_list tbody")
   }
 </script>
