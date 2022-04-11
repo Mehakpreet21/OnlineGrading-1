@@ -84,7 +84,6 @@ def gradeExam(request, exam_pk):
             is_named_correctly = check_name(q_data['function_name'], submission)
             answer.name_correct = is_named_correctly
             answer.name_max_points = item_score
-            #still to add point checker for constraint
             if is_named_correctly:
                 answer.name_autograde_points = item_score
                 answer.name_points = item_score
@@ -119,7 +118,7 @@ def gradeExam(request, exam_pk):
                 if has_constraint:
                     constraint_tc.actual = f"Uses {q_data['constraint']}"
                     constraint_tc.points_autograde = item_score
-                    constraint_tc.points_manual = item_score
+                    constraint_tc.point_manual = item_score
 
                 testcases_insert.append(constraint_tc)
 

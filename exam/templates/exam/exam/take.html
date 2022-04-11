@@ -55,7 +55,7 @@
 
     {% for eq in questions %}
     <li class="page-item">
-      <button class="page-link" onclick="goto('{{ forloop.counter0 }}')">{{ forloop.counter }}</button>
+      <button class="page-link" onclick="goto({{ forloop.counter0 }})">{{ forloop.counter }}</button>
     </li>
     {% endfor %}
 

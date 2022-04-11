@@ -1,5 +1,3 @@
-from curses import raw
-from re import search
 import subprocess
 
 

@@ -106,7 +106,7 @@
             <td>{{ q.answer.name_autograde_points|floatformat }}</td>
             <td>
             {% if can_edit %}
-                <input type="text" name="namePoints[{{ q.answer.pk }}]" value="{{ q.answer.name_points }}">
+                <input type="text" name="namePoints[{{ q.answer.pk }}]" value="{{ q.answer.name_points|floatformat }}">
             {% else %}
                 {{ q.answer.name_points|floatformat }}
             {% endif %}
@@ -121,7 +121,7 @@
             <td>{{ tc.points_autograde|floatformat }}</td>
             <td>
             {% if can_edit %}
-                <input type="text" name="testcaseEdit[{{ tc.pk }}]" value="{{ tc.point_manual }}">
+                <input type="text" name="testcaseEdit[{{ tc.pk }}]" value="{{ tc.point_manual|floatformat }}">
             {% else %}
                 {{ tc.point_manual|floatformat }}
             {% endif %}
