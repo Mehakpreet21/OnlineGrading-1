@@ -12,7 +12,7 @@ def get_params_output_from_testcases(name: str, testcases: str):
     for line in testcases.splitlines():
         line = line.strip()
 
-        # skip blank lines and comments 
+        # skip blank lines and comments
         if len(line) == 0 or line.startswith("#"): continue
 
         if is_param:
@@ -32,9 +32,9 @@ def check_name(expected_function_name: str, raw_submission: str) -> bool:
 
         if len(line) == 0 or line.startswith("#"): # skip empty lines and comments
             continue
-        if not line.startswith("def "): # skip not function definition lines 
+        if not line.startswith("def "): # skip not function definition lines
             continue
-        
+
         try:
             # the name a function is the word after 'def ' and before the first '('
             func_name = line[4 : line.index('(')]
@@ -50,7 +50,7 @@ def check_name(expected_function_name: str, raw_submission: str) -> bool:
 
 def correct_name(expected_function_name: str, raw_submission: str) -> str:
     """Replace the first semi valid function definition name with expected_function_name.
-    If there are no functions, append an empty function name called expected_function_name 
+    If there are no functions, append an empty function name called expected_function_name
     """
 
     for line in raw_submission.splitlines():
@@ -58,9 +58,9 @@ def correct_name(expected_function_name: str, raw_submission: str) -> str:
 
         if len(line) == 0 or line.startswith("#"): # skip empty lines and comments
             continue
-        if not line.startswith("def "): # skip not function definition lines 
+        if not line.startswith("def "): # skip not function definition lines
             continue
-        
+
         # we are now at the first supposed function definition
         # it might not be partially syntactically correct. ex: "def ", "def name"
 
@@ -80,6 +80,13 @@ def correct_name(expected_function_name: str, raw_submission: str) -> str:
 
     return raw_submission + definition
 
+def check_constraint(constraint: str, raw_submission: str) -> bool:
+    mapping = {
+        "FOR": "for",
+        "WHILE": "while",
+        "IF": "if"
+    }
+    return mapping[constraint] in raw_submission
 
 
 def get_output(source_code):
@@ -102,9 +109,8 @@ def grade_testcases(params, expected_output, raw_student_output, item_score):
             actual = student_outputs[i]
         except:
             actual = ""
-        
+
         score = item_score if expected == actual else 0
         return_data.append( (params[i], expected, actual, score) )
 
     return return_data
-

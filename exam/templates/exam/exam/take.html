@@ -50,11 +50,23 @@
 {% block content %}
 <h2>Questions</h2>
 
+<nav aria-label="Page navigation example">
+  <ul class="pagination">
+
+    {% for eq in questions %}
+    <li class="page-item">
+      <button class="page-link" onclick="goto({{ forloop.counter0 }})">{{ forloop.counter }}</button>
+    </li>
+    {% endfor %}
+
+  </ul>
+</nav>
+
 <form method="POST">
   {% csrf_token %}
 
   {% for eq in questions %}
-  <div class="form-group">
+  <div class="form-group" id="view-{{ forloop.counter0 }}">
 
     <label for="{{q.pk}}">{{ eq.question.name }}</label>
     <p>{{ eq.question.detail }} <i>({{ eq.points }} points)</i> </p> <br>
@@ -63,30 +75,80 @@
 
     <label for="q-{{ forloop.counter }}">Answer {{ forloop.counter }}: </label><br>
     <textarea id="q-{{ forloop.counter }}" name="answer[{{ forloop.counter }}]"></textarea>
+    <br><br>
+
+
+    <!-- Next / PREV / Submit -->
+    {% if not forloop.first %}
+      <button type="button" onclick="onPrev()">PREV</button>
+    {% endif %}
+
+    {% if forloop.last %}
+      <button type="submit" value="Submit Exam" class="button button1" name="submit">Submit Exam</button>
+    {% else %}
+      <button type="button" onclick="onNext()">NEXT</button>
+    {% endif %}
+
   </div>
-  <br>
 
   {% empty %}
       <p>No Questions.</p>
   {% endfor %}
 
   <br><br>
-  <button type="submit" value="Submit Exam" class="button button1" name="submit">Submit Exam</button>
+  
   <br>
 </form>
 {% endblock %}
 
 
 {% block scripts %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
+
+const numQuestions = {{ questions|length }}
+let currentQuestion = 0;
+
 $( document ).ready(function() {
+  // 4 Spaces on Tab
   $('textarea').on('keydown', function(e) {
     if(e.key === 'Tab') {
       e.preventDefault();
       $(this).val($(this).val() + '    ')
    }
   })
+
+  // hide all (except first question)
+  for(let i = 1; i < numQuestions; i += 1) {
+    $(`#view-${i}`).hide()
+  }
 });
+
+function hideAll() {
+  for(let i = 0; i < numQuestions; i += 1) {
+    $(`#view-${i}`).hide()
+  }
+}
+
+function onNext() { 
+  if(currentQuestion + 1 ==  numQuestions) return
+  $(`#view-${currentQuestion}`).hide()
+  currentQuestion += 1;
+  $(`#view-${currentQuestion}`).show()
+}
+
+function onPrev() {
+  if(currentQuestion == 0) return
+  $(`#view-${currentQuestion}`).hide()
+  currentQuestion -= 1;
+  $(`#view-${currentQuestion}`).show()
+}
+
+function goto(q) {
+  hideAll()
+  currentQuestion = q
+  $(`#view-${q}`).show()
+}
+
+
 </script>
 {% endblock %}

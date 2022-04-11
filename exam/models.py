@@ -38,6 +38,25 @@ class Question(models.Model):
         HARD = 'HARD', _('HARD')
 
     difficulty = models.CharField(max_length=10, choices=Difficulty.choices, default=Difficulty.EASY)
+    
+    class Topic(models.TextChoices):
+        MATH = 'MATH', _('Math')
+        ARRAYS = 'ARRAYS', _('Arrays')
+        FORLOOP = 'FORLOOP', _('For Loop')
+        WHILELOOP = 'WHILELOOP', _('While Loop')
+        RECURSION = 'RECURSION', _('Recursion')
+        IF = 'IF', _('if')
+
+    topic = models.CharField(max_length=10, choices=Topic.choices, default=Topic.MATH)
+
+    class Constraint(models.TextChoices):
+        NONE = 'NONE', _('None')
+        FOR = 'FOR', _('For Loop')
+        WHILE = 'WHILE', _('While Loop')
+        IF = 'IF', _('if')
+
+    constraint = models.CharField(max_length=10, choices=Constraint.choices, default=Constraint.NONE)
+
 
     def __str__(self):
         return self.name
@@ -87,6 +106,7 @@ class Answer(models.Model):
     name_autograde_points = models.FloatField(default=0)
     name_points = models.FloatField(default=0)
     name_max_points = models.FloatField(default=0)
+    comment = models.TextField(default="")
 
     def __str__(self):
         return f"{self.takenexam.exam.name} - {self.question.name} - {self.takenexam.student.email} "

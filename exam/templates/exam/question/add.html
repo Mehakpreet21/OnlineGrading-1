@@ -26,21 +26,56 @@
     background-color: #F9CD85;
     color: white;
   }
+
+  .split {
+  height: 100%;
+  width: 47%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 200px;
+  }
+
+  /* header above split screen */
+  .header{
+    width:100%;
+    height:50px;
+    position:fixed;
+    z-index:100;
+    background-color:#F00;
+  }
+
+  /* Control the left side */
+  .left {
+    left: 0;
+    background-color: white;
+  }
+  /* Control the right side */
+  .right {
+    right: 0;
+    background-color: white;
+  }
 </style>
 {% endblock %}
 
 
 {% block header %}
-<div class="jumbotron jumbotron-fluid" style="background-color: #F9CD85;">
-  <div class="container">
-    <h1 class="display-4">Create a Question</h1>
-    <p class="lead">Create questions to be added to the question bank </p>
+<div class="header">
+  <div class="jumbotron jumbotron-fluid" style="background-color: #F9CD85;">
+    <div class="container">
+      <h1 class="display-4">Create a Question</h1>
+      <p class="lead">Create questions to be added to the question bank </p>
+      <br>
+      <a href="{% url 'exam:questions-list' %}">
+        <button class="button button1">Question Bank </button>
+      </a>
+      <a href="/">
+        <button class="button button1" name="start">Back</button>
+      </a>
+    </div>
     <br>
-    <a href="{% url 'exam:questions-list' %}">
-      <button class="button button1">Question Bank</button>
-    </a>
   </div>
-  <br>
 </div>
 <br>
 {% endblock %}
@@ -49,9 +84,12 @@
 {% block content %}
 <form method="POST">
   {% csrf_token %}
-
+<div class="split left" style="padding-left:35px; padding-right:15px">
   <!-- Function Name -->
+  <br>
+  <br>
   <div class="form-group">
+    <br>
     <h4><label for="usr">Function Name:</label></h4>
     <input type="text" name="name" class='form-control'required> <br>
   </div>
@@ -81,6 +119,71 @@
       <input class="form-check-input" type="radio" name="difficulty" id="hard" value="HARD">
       <label class="form-check-label" for="flexRadioDefault2">Hard</label>
     </div>
+    <br>
+
+    <!-- Topic -->
+    <div class="form-group">
+      <h4><label>Topic:</label></h4>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topic" id="MATH" value="MATH">
+        <label class="form-check-label" for="flexRadioDefault1">Math</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topic" id="ARRAYS" value="ARRAYS">
+        <label class="form-check-label" for="flexRadioDefault1">Arrays</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topic" id="FORLOOP" value="FORLOOP">
+        <label class="form-check-label" for="flexRadioDefault2">For Loop</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topic" id="WHILELOOP" value="WHILELOOP">
+        <label class="form-check-label" for="flexRadioDefault2">While Loop</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topic" id="FORLOOP" value="FORLOOP">
+        <label class="form-check-label" for="flexRadioDefault2">For Loop</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topic" id="RECURSION" value="RECURSION">
+        <label class="form-check-label" for="flexRadioDefault2">Recursion</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="topic" id="IF" value="IF">
+        <label class="form-check-label" for="flexRadioDefault2">if</label>
+      </div>
+      <br>
+
+      <!-- Constraint -->
+    <div class="form-group">
+      <h4><label for="usr">Constraint?</label></h4>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="constraint" id="if" value="IF">
+        <label class="form-check-label" for="flexRadioDefault1">If Condition</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="constraint" id="while" value="WHILE">
+        <label class="form-check-label" for="flexRadioDefault1">While Loop</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="constraint" id="for" value="FOR">
+        <label class="form-check-label" for="flexRadioDefault1">For Loop</label>
+      </div>
+
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="constraint" id="none" value="NONE">
+        <label class="form-check-label" for="flexRadioDefault1">None</label>
+      </div>
+      <br>
+
   </div>
   <br>
 
@@ -94,10 +197,142 @@
   <!-- Submit -->
   <input class="button button1" type="submit" value="Add Question">
   <br>
-
+</div>
 </form>
 
-<a href="/">
-  <button class="button button1" name="start">Back</button>
-</a>
+<div class="split right" style="padding-right:35px">
+  <br>
+  <br>
+  <br>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left:5px">
+    <a class="navbar-brand" href="#"> Filters:</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <p></p>
+        </li>
+        <li class="nav-item dropdown" style="padding-left:15px">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Difficulty
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><button type="button" class="dropdown-item" onclick="onDifficultySelected('EASY')">Easy</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onDifficultySelected('MEDIUM')">Medium</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onDifficultySelected('HARD')">Hard</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onDifficultySelected(null)">Clear Filter</button></li>
+            </ul>
+          </div>
+        </li>
+        <li class="nav-item dropdown"style="padding-left:15px">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Topics
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><button type="button" class="dropdown-item" onclick="onTopicSelected('FORLOOP')">For Loop</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onTopicSelected('WHILELOOP')">While Loop</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onTopicSelected('RECURSION')">Recursion</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onTopicSelected('MATH')">Math</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onTopicSelected('ARRAYS')">Arrays</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onTopicSelected('IF')">If</button></li>
+              <li><button type="button" class="dropdown-item" onclick="onTopicSelected(null)">Clear Filter</button></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <div class="input-group" style="padding-left:25px; padding-right:50px">
+        <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onkeydown="keywordSearch(this.value)"/>
+        <button type="button" class="btn btn-outline-primary">search</button>
+      </div>
+  </nav>
+  <br>
+
+  <table class="table">
+    <thead>
+      <th>#</th>
+      <th>Function Name</th>
+      <th>Difficulty</th>
+      <th>Topic</th>
+      <th>Constraint</th>
+      <th>Created</th>
+      <th>Details</th>
+    </thead>
+    <tbody>
+      {% for question in question_list %}
+      <!-- -{{ question.name }}-{{ question.difficulty }}-{{ question.topic }} -->
+      <tr id="view-{{ question.pk }}">
+        <td>{{ question.pk }}</td>
+        <td>{{ question.name }}</td>
+        <td>{{ question.difficulty }}</td>
+        <td>{{ question.topic }}</td>
+        <td>{{ question.constraint }}</td>
+        <td>{{ question.created|date }}</td>
+        <td><a href="{% url 'exam:questions-detail' question.pk %}">View Details</a></td>
+      </tr>
+
+      {% empty %}
+      <tr>No Questions Yet. <a href="{% url 'exam:questions-add' %}">Add a new question</a> </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<!-- Question Bank -->
+<script>
+  // We create a JS array with our question data we can search through
+  const questions = [
+    {% for question in question_list %}
+      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail:"{{ question.detail }}"},
+    {% endfor %}
+  ]
+</script>
+
+<script>
+  function onDifficultySelected(difficulty) {
+    if(difficulty === null) return showAll()
+
+    const show = questions.filter(q => q.difficulty === difficulty)
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+  function onTopicSelected(topic) {
+    if(topic === null) return showAll()
+
+    const show = questions.filter(q => q.topic === topic)
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+  function keywordSearch(keyword) {
+    const show = questions.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
+    const showIds = show.map(q => q.id)
+
+    showAllInArray(showIds)
+  }
+
+
+  function showAllInArray(showOnly) {
+    for(q of questions) {
+      if(showOnly.includes(q.id)) $(`#view-${q.id}`).show()
+      else $(`#view-${q.id}`).hide()
+    }
+  }
+
+  function showAll() {
+    for(q of questions) {
+      $(`#view-${q.id}`).show()
+    }
+  }
+</script>
 {% endblock %}

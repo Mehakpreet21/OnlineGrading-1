@@ -45,7 +45,7 @@
 
 {% block content %}
 
-<!-- if can_edit wrap in form -->
+<!-- if can_edit wrap in form --> 
 {% if can_edit %}
 <form method="POST">
 {% csrf_token %}
@@ -59,8 +59,8 @@
 {% endif %}
 <br>
 
-<h4>Total Points (autograded): {{ points_autograde }} / {{ max_possible_points }} </h4>
-<h4>Total Points (Manually Adjusted): {{ points_total }} / {{ max_possible_points }} </h4>
+<h4>Total Points (autograded): {{ points_autograde|floatformat }} / {{ max_possible_points|floatformat }} </h4>
+<h4>Total Points (Manually Adjusted): {{ points_total|floatformat }} / {{ max_possible_points|floatformat }} </h4>
 <br>
 
 
@@ -82,7 +82,7 @@
                 <pre>{{ q.answer.submission }}</pre>
             </td>
             <td>
-                <pre>{{ q.answer.autograde_output }}</pre>
+                <pre>{{ q.answer.autograde_output|floatformat }}</pre>
             </td>
         </tr>
     </tbody>
@@ -103,12 +103,12 @@
             <td>Function Name</td>
             <td>{{ q.question.name }}</td>
             <td>{% if q.answer.name_correct %} {{ q.question.name }} {% else %} INCORRECT {% endif %}</td>
-            <td>{{ q.answer.name_autograde_points }}</td>
+            <td>{{ q.answer.name_autograde_points|floatformat }}</td>
             <td>
             {% if can_edit %}
-                <input type="text" name="namePoints[{{ q.answer.pk }}]" value="{{ q.answer.name_points }}">
+                <input type="text" name="namePoints[{{ q.answer.pk }}]" value="{{ q.answer.name_points|floatformat }}">
             {% else %}
-                {{ q.answer.name_points }}
+                {{ q.answer.name_points|floatformat }}
             {% endif %}
             </td>
         </tr>
@@ -118,12 +118,12 @@
             <td>{{ tc.testcase }}</td>
             <td>{{ tc.expected }}</td>
             <td>{{ tc.actual }}</td>
-            <td>{{ tc.points_autograde }}</td>
+            <td>{{ tc.points_autograde|floatformat }}</td>
             <td>
             {% if can_edit %}
-                <input type="text" name="testcaseEdit[{{ tc.pk }}]" value="{{ tc.point_manual }}">
+                <input type="text" name="testcaseEdit[{{ tc.pk }}]" value="{{ tc.point_manual|floatformat }}">
             {% else %}
-                {{ tc.point_manual }}
+                {{ tc.point_manual|floatformat }}
             {% endif %}
             </td>
         </tr>
@@ -132,8 +132,16 @@
     </tbody>
 </table>
 
-<h5>Total Points (autograded): {{ q.points_autograde }} / {{ q.max_possible_points }} </h5>
-<h5>Total Points (Manually Adjusted): {{ q.points_total }} / {{ q.max_possible_points }} </h5>
+<h5>Total Points (autograded): {{ q.points_autograde|floatformat }} / {{ q.max_possible_points|floatformat }} </h5>
+<h5>Total Points (Manually Adjusted): {{ q.points_total|floatformat }} / {{ q.max_possible_points|floatformat }} </h5>
+
+<h4>Comment:</h4>
+{% if can_edit %}
+    <textarea name="answerComment[{{ q.answer.pk }}]">{{ q.answer.comment }}</textarea>
+{% else %}
+    <p>{% if q.answer.comment %} {{ q.answer.comment }} {% else %} No Comment {% endif %}</p>
+{% endif %}
+
 
 <hr>
 <br><br>

@@ -36,22 +36,16 @@ class ExamAdd(View):
         exam.save()
 
         ## Handle adding ExamQuestions
-        # request.POST is immutable. create copy
-        question_post = dict(request.POST)
-        # delete keys no longer needed to leave only question data 
-        del question_post['csrfmiddlewaretoken']
-        del question_post['name']
-        question_post.pop("is_assigned", None)
-
-        # Insert all selected questions
         to_insert = []
-        for i in range(1, len(question_post) + 1):
-            q = question_post[f"questions[{i}]"]
-            # q is [selected_pk, points] or just [points] if not selected
-            if(len(q) != 2): continue # skip unselected questions
-            
-            # create exam question
-            question = ExamQuestion(exam=exam, question_id=q[0], points=q[1])
+        for k, v in dict(request.POST).items():
+            if not k.startswith("questions["): continue # skip non questions
+            print(k, v)
+
+            q_id = int(k[len('questions['): -1])
+            q_points = float(v[0]) 
+            if q_points <= 0: q_points = 1
+
+            question = ExamQuestion(exam=exam, question_id=q_id, points=q_points)
             to_insert.append(question)
 
         ExamQuestion.objects.bulk_create(to_insert)
