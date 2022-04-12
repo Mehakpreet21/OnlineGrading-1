@@ -31,8 +31,8 @@ class QuestionAdd(View):
 
     def post(self, request):
         question = Question(
-            name=request.POST['name'],
-            detail=request.POST['detail'],
+            name=request.POST['name'].strip(),
+            detail=request.POST['detail'].strip(),
             testcases=request.POST['testcases'],
             difficulty=request.POST['difficulty'],
             topic=request.POST['topic'],
@@ -47,3 +47,5 @@ class QuestionAdd(View):
 class QuestionDetail(DetailView):
     model = Question
     template_name = 'exam/question/detail.html'
+
+    
