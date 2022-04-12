@@ -181,7 +181,7 @@
         </li>
       </ul>
       <div class="input-group" style="padding-left:25px; padding-right:50px">
-      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onkeydown="keywordSearch(this.value)"/>
+      <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" onkeydown="keywordSearch(this.value)" id="search"/>
       <button type="button" class="btn btn-outline-primary">search</button>
     </div>
   </nav>
@@ -222,63 +222,60 @@
 </div>
 {% endblock %}
 
-{% block scripts %}
 
-<!-- Exam Question Bank -->
+{% block scripts %}
+<!-- Question Bank -->
 <script>
   // We create a JS array with our question data we can search through
-  const qs = [
+  const questions = [
     {% for question in questions %}
-      { id: "{{ question.id }}", name: "{{ question.name }}", topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail: "{{ question.detail }}"},
+      { id: "{{ question.id }}", name: `{{ question.name }}`, topic: "{{ question.topic }}", difficulty: "{{ question.difficulty }}", detail:`{{ question.detail }}`},
     {% endfor %}
   ]
 </script>
 
 <script>
+  let selectedDifficulty = null;
+  let selectedTopic = null;
+  let selectedKeyword = "";
+
   function onDifficultySelected(difficulty) {
-    if(difficulty === null) return showAll()
-
-    const show = qs.filter(q => q.difficulty === difficulty)
-    const showIds = show.map(q => q.id)
-
-    showAllInArray(showIds)
+    selectedDifficulty = difficulty;
+    showAndHideAccordingToFilters()
   }
 
   function onTopicSelected(topic) {
-    if(topic === null) return showAll()
-
-    const show = qs.filter(q => q.topic === topic)
-    const showIds = show.map(q => q.id)
-
-    showAllInArray(showIds)
+    selectedTopic = topic;
+    showAndHideAccordingToFilters()
   }
 
   function keywordSearch(keyword) {
-    const show = qs.filter(q => q.name.includes(keyword) || q.detail.includes(keyword))
-    const showIds = show.map(q => q.id)
-
-    showAllInArray(showIds)
+    selectedKeyword = keyword
+    showAndHideAccordingToFilters()
   }
 
-
-  function showAllInArray(showOnly) {
-    for(q of qs) {
-      if(showOnly.includes(q.id)) $(`#view-${q.id}`).show()
-      else $(`#view-${q.id}`).hide()
-    }
+  function onSearchClicked() {
+    const val = $("#search").val()
+    selectedKeyword = val
+    showAndHideAccordingToFilters()
   }
+  
 
-  function showAll() {
-    for(q of qs) {
-      $(`#view-${q.id}`).show()
+  function showAndHideAccordingToFilters() {
+    for(q of questions) {
+      const difficultyOk = selectedDifficulty === null || q.difficulty == selectedDifficulty
+      const topicOk = selectedTopic === null || q.topic == selectedTopic
+      const keywordOk = selectedKeyword === "" || q.name.includes(selectedKeyword) || q.detail.includes(selectedKeyword)
+
+
+      if(difficultyOk && topicOk && keywordOk)
+        $(`#view-${q.id}`).show()
+      else
+        $(`#view-${q.id}`).hide()
     }
   }
 
   function add_to_exam(question_name, question_id){
-    // var rows = ""
-    // var name = question_name
-    // rows += "<tr><td>" + name + "</td><td>"
-    // $(rows).appendTo("#exam_q_list tbody")
     var rows = ""
     rows += `<tr><td>${question_name}</td><td> <input type="number" value="0" name="questions[${question_id}]"> </td></tr>`
     $(rows).appendTo("#exam_q_list tbody")
