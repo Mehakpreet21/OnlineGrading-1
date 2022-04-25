@@ -35,9 +35,12 @@
     <h1 class="display-4">Exam Bank</h1>
     <p class="lead">Here you can view a list of exams you have created!</p>
     <br>
-    <button class="button button1" name="start">
-      <a href="{% url 'exam:exams-add' %}">Create Exam</a>
-    </button>
+    <a href="{% url 'exam:exams-add' %}">
+    <button class="button button1" name="start">Create Exam</button>
+    </a>
+    <a href="/">
+    <button class="button button1" name="start">Back</button>
+    </a>
     <br>
   </div>
 </div>
@@ -80,9 +83,5 @@
 
   </tbody>
 </table>
-
-<a href="/">
-<button class="button button1" name="start">Back</button>
-</a>
 
 {% endblock %}

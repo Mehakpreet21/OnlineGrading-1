@@ -35,8 +35,8 @@
   <div class="container">
     <h1 class="display-4">Question Bank</h1>
     <p class="lead">This is a list of questions you can use for exams or quizzes</p>
-
     <a href="{% url 'exam:questions-add' %}" class="button button1">Add a new question</a>
+    <a href="/" class="button button1">Back</a>
     <br>
   </div>
   <br>
@@ -123,9 +123,6 @@
   </tbody>
 </table>
 
-
-<a href="/" class="button button1">Back</a>
-
 {% endblock %}
 
 {% block scripts %}
@@ -164,7 +161,7 @@
     selectedKeyword = val
     showAndHideAccordingToFilters()
   }
-  
+
 
   function showAndHideAccordingToFilters() {
     for(q of questions) {
