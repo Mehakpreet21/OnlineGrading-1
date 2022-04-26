@@ -13,7 +13,6 @@
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
   }
@@ -42,6 +41,7 @@
 {% block header %}
 <div class="jumbotron">
   <div class="container">
+    <br><br><br>
     <h1 class="display-4">Welcome, Student {{ request.user.email }}.</h1>
     <p class="lead">This is your home page</p>
 
@@ -54,19 +54,21 @@
 
 
 {% block content %}
-<div class="content" style="margin-left:50px; margin-right:50px; align-content: center">
-
+<div class="content" style="margin-left:auto; margin-right:auto; align-content: center">
+  <br>
+  <hr>
+  <br>
   <h2>What would you like to proceed with?</h2> <br>
 
   <a href="{% url 'exam:exams-pending' %}">
     <button class="button button1" name="start">Take Exam</button>
   </a>
-  <br>
+  
 
   <a href="{% url 'exam:grade-student-list' %}">
     <button class="button button2" name="results">Check Results</button>
   </a>
-  <br>
+
 
 </div>
 {% endblock %}
