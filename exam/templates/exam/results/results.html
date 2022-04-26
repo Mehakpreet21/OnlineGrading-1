@@ -112,7 +112,7 @@
                 {{ q.answer.name_points|floatformat }}
             {% endif %}
             </td>
-            <td>{{ q.name_max_points }}</td>
+            <td>{{ q.answer.name_max_points }}</td>
         </tr>
 
         {% for tc in q.testcases %}
@@ -128,7 +128,7 @@
                 {{ tc.point_manual|floatformat }}
             {% endif %}
             </td>
-            <td>{{ q.name_max_points }}</td> <!-- Each item is the same score we just take  so this will work -->
+            <td>{{ q.answer.name_max_points }}</td> <!-- Each item is the same score we just take  so this will work -->
         </tr>
         {% endfor %}
 
