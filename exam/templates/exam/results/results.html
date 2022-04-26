@@ -37,7 +37,7 @@
     <h1>Exam Results - {{ taken_by.email }} </h1>
     <h4>Exam Name: {{ exam.name }}</h4>
     <h4>Created: {{ exam.created|date }}</h4>
-    <h4>This exam was submitted at: {{ taken_at|date }} {{ taken_at|time }}</h4>
+    <h4>This exam was submitted at: {{ taken_at|date }} {{ taken_at|time }} UTC</h4>
   </div>
 </div>
 
@@ -96,6 +96,7 @@
         <th>Actual</th>
         <th>Autograde Points</th>
         <th>Manual Points</th>
+        <th>Possible Points</th>
     </thead>
     <tbody>
 
@@ -111,6 +112,7 @@
                 {{ q.answer.name_points|floatformat }}
             {% endif %}
             </td>
+            <td>{{ q.answer.name_max_points|floatformat }}</td>
         </tr>
 
         {% for tc in q.testcases %}
@@ -126,6 +128,7 @@
                 {{ tc.point_manual|floatformat }}
             {% endif %}
             </td>
+            <td>{{ q.answer.name_max_points|floatformat }}</td> <!-- Each item is the same score we just take  so this will work -->
         </tr>
         {% endfor %}
 

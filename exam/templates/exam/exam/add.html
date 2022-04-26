@@ -22,10 +22,12 @@
     background-color: white;
     color: black;
     border: 2px solid #008CBA;
+    display: inline-block;
   }
   .button1:hover {
     background-color: #008CBA;
     color: white;
+    display: inline-block;
   }
 
   .split {
@@ -67,10 +69,9 @@
     <div class="container">
       <h1 class="display-4">Create New Exam</h1>
       <p class="lead">Here you can choose questions from Question bank for an Exam.</p>
-
-      <button class="button button1" name="start">
-        <a href="/">Back</a>
-      </button>
+      <a href="/">
+      <button class="button button1" name="start">Back</button>
+      </a>
     </div>
   </div>
 </div>
@@ -259,7 +260,7 @@
     selectedKeyword = val
     showAndHideAccordingToFilters()
   }
-  
+
 
   function showAndHideAccordingToFilters() {
     for(q of questions) {

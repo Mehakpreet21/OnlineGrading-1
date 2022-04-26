@@ -34,7 +34,10 @@
 <div class="jumbotron" style="background-color: #BDFFBF;">
   <div class="container">
     <h1 class="display-4">{{ request.user.email }}</h1>
-    <p>Exam results will show up below once they have been graded!</p><br>
+    <p>Exam results will show up below once they have been graded!</p>
+    <a href="/">
+      <button class="button button1" name="start">Back</button>
+    </a>
   </div>
 </div>
 <br>
@@ -66,9 +69,5 @@
         {% endfor %}
     </tbody>
 </table>
-
-<a href="/">
-  <button class="button button1" name="start">Back</button>
-</a>
 
 {% endblock %}
